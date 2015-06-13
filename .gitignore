@@ -1,8 +1,5 @@
 # Cache and logs (Symfony2)
-*
-provisioners/parameters
-!provisioners/*
-!symfony/*
-!README.md
-!.gitignore
-!Vagrantfile.dist
+
+.vagrant
+dirisi24
+Vagrantfile
