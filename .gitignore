@@ -1,5 +1,5 @@
-# Cache and logs (Symfony2)
-
+#
 .vagrant
 dirisi24
 Vagrantfile
+provisioners/parameters
