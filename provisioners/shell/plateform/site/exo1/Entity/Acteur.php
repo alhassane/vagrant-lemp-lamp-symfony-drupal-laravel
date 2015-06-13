@@ -17,16 +17,16 @@ class Acteur
     private $id;
     
     /**
-     * @ORM\Column(type="string",length="255")
+     * @ORM\Column(type="string",length=255)
      * @Assert\NotBlank()
-     * @Assert\MinLength(limit = 3, message = "erreur.nom.minlength")
+     * @Assert\Length(min = 3, minMessage = "erreur.nom.minlength")
      */    
     private $nom;
 
     /**
-     * @ORM\Column(type="string",length="255")
+     * @ORM\Column(type="string",length=255)
      * @Assert\NotBlank()
-     * @Assert\MinLength(3)
+     * @Assert\Length(min = 3)
      */    
     private $prenom;
 
@@ -37,7 +37,7 @@ class Acteur
     private $dateNaissance;
 
     /**
-     * @ORM\Column(type="string",length="1")
+     * @ORM\Column(type="string",length=1)
      * @Assert\NotBlank()
      * @Assert\Choice(choices = {"M", "F"})
      */    

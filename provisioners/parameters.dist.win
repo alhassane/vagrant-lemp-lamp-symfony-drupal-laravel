@@ -32,3 +32,11 @@ $plateform_install_version=""
 $plateform_projet_git=""
 $plateform_username_git=""
 $plateform_projet_name="myproject"
+
+#Plateform
+$plateform_install_name="symfony-nginx"
+$plateform_install_type="composer"
+$plateform_install_version="2.4.0"
+$plateform_projet_git=""
+$plateform_username_git=""
+$plateform_projet_name="dirisi24"

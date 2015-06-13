@@ -1,5 +1,5 @@
-# Default configuration for extension with alias: "fos_rest"
 
+# Default configuration for extension with alias: "fos_rest"
 fos_rest:
     disable_csrf_role:    null
     access_denied_listener:

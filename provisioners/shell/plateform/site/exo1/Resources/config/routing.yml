@@ -35,4 +35,4 @@ myapp_film_voir:
   defaults: { _controller: MyAppSiteBundle:Film:voir }
 myapp_choisir_langue:
   pattern: /choisir-langue/{langue}
-  defaults: { _controller: MyAppSiteBundle:Default:choisirLangue }
+  defaults: { _controller: MyAppSiteBundle:Default:choisirLangue } 

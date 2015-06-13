@@ -105,8 +105,9 @@ fi
 echo "** we add encoder in security.yml **"
 if ! grep -q "sha512" app/config/security.yml; then
     sed -i 's/Symfony\\Component\\Security\\Core\\User\\User: plaintext/'$DOMAINE'\\AuthBundle\\Entity\\User: sha512/g' app/config/security.yml
+    # Symfony\Component\Security\Core\User\User: plaintext
 fi
-if ! grep -q "path: ^/login_check" app/config/security.yml; then
+if ! grep -q "${MYAPP_PREFIX}/resseting" app/config/security.yml; then
     sed -i "/[^_]access_control:/r $DIR/fosuser/addAccessControlSecurity.yml" app/config/security.yml
     sed -i "s/myapp/${MYAPP_PREFIX}/g" app/config/security.yml
 fi

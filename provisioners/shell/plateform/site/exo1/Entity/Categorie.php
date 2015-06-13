@@ -17,9 +17,9 @@ class Categorie
     private $id;
     
     /**
-     * @ORM\Column(type="string",length="255")
+     * @ORM\Column(type="string",length=255)
      * @Assert\NotBlank()
-     * @Assert\MinLength(3)
+     * @Assert\Length(min = 3)
      */    
     private $nom;
 

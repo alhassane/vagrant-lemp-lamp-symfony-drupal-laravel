@@ -17,6 +17,6 @@ if ! grep -q "FOSRestBundle" app/AppKernel.php; then
 fi
 
 echo "** we add FOSRestBundle configuration **"
-if ! grep -q "fos_user" app/config/config.yml; then
+if ! grep -q "fos_rest" app/config/config.yml; then
     echo "$(cat $DIR/provisioners/shell/plateform/fosrest/addConfig.yml)" >> app/config/config.yml
 fi

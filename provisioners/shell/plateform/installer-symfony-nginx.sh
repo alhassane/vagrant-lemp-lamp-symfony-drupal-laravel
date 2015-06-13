@@ -27,34 +27,30 @@ echo "**** we download artifact project ****"
 if [ ! -f $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME/composer.json ]; then
     case $PLATEFORM_INSTALL_TYPE in
         'composer' )
-            curl -s https://getcomposer.org/installer | php
-            wget https://getcomposer.org/composer.phar -O ./composer.phar
-            php composer.phar create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_VERSION
+            #curl -s https://getcomposer.org/installer | php
+            #wget https://getcomposer.org/composer.phar -O ./composer.phar
+            composer create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'stack' )
             curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
             chmod a+x /usr/local/bin/symfony
-            symfony new $PLATEFORM_PROJET_NAME $PLATEFORM_VERSION
+            symfony new $PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'tar' )
             mkdir  $PLATEFORM_PROJET_NAME
             cd $PLATEFORM_PROJET_NAME
-            wget http://symfony.com/download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
-            tar -zxvf download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
+            wget http://symfony.com/download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
+            tar -zxvf download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
             mv Symfony/* ./
-            rm -rf download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
+            rm -rf download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
             rm -rf Symfony
         ;;
     esac
 else
     cd $PLATEFORM_PROJET_NAME
 fi
-
-find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyApp\\SiteBundle/${DOMAINE}\\${MYAPP_BUNDLE_NAME}Bundle/g" {} \;
-
-exit 1
 
 echo "**** we create default directories ****"
 if [ ! -d app/cachesfynx ]; then
@@ -65,7 +61,7 @@ fi
 
 echo "**** we modify parameters.yml.dist ****"
 sed -i '/database_/d' app/config/parameters.yml.dist # delete lines witch contain "database"_ string
-sed -i "/parameters/r $DIR/provisioners/shell/plateform/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
+sed -i "/parameters:/r $DIR/provisioners/shell/plateform/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
 sed -i "s/myproject/${PLATEFORM_PROJET_NAME_LOWER}/g" app/config/parameters.yml.dist
 
 echo "**** we create parameters.yml ****"
@@ -196,6 +192,7 @@ server {
 
     # Pass the PHP scripts to FastCGI server
     location ~ ^/(app|app_dev|app_test|config)\.php(/|\$) {
+        #include snippets/fastcgi-php.conf
         fastcgi_pass php5-fpm-sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)\$;
         include fastcgi_params;
@@ -320,6 +317,7 @@ server {
 
     # Pass the PHP scripts to FastCGI server
     location ~ ^/(app|app_dev|app_test|config)\.php(/|\$) {
+        #include snippets/fastcgi-php.conf
         fastcgi_pass php5-fpm-sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)\$;
         include fastcgi_params;
@@ -444,6 +442,7 @@ server {
 
     # Pass the PHP scripts to FastCGI server
     location ~ ^/(app|app_dev|app_test|config)\.php(/|\$) {
+        #include snippets/fastcgi-php.conf
         fastcgi_pass php5-fpm-sock;
         fastcgi_split_path_info ^(.+\.php)(/.*)\$;
         include fastcgi_params;
@@ -522,6 +521,7 @@ fi
 if [ ! -f composer.phar ]; then
     echo "**** we install/update the composer file ****"
     wget https://getcomposer.org/composer.phar -O ./composer.phar
+    #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "update composer.phar"
     php composer.phar self-update    
@@ -533,16 +533,16 @@ php app/console doctrine:database:create --env=test
 
 echo "**** we install bundles and their dependancies ****"
 $DIR/provisioners/shell/plateform/doctrine/doctrine-extension.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
-$DIR/provisioners/shell/plateform/jms/jms.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" 
+$DIR/provisioners/shell/plateform/jms/jms.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 $DIR/provisioners/shell/plateform/fosuser/fosuser.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
-$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"
-$DIR/site/install.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
+$DIR/provisioners/shell/plateform/site/install.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
+$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"
 #$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 
 echo "**** we lauch the composer ****"
-php -d memory_limit=1024M composer.phar install --no-interaction
+composer install --no-interaction
 echo "**** Generating optimized autoload files ****"
-php composer.phar dump-autoload --optimize
+composer dump-autoload --optimize
 
 echo "**** we remove cache files ****"
 rm -rf app/cache/*

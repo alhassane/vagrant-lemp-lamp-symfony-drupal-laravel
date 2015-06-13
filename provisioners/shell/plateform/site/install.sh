@@ -27,12 +27,6 @@ find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyAppA
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/MyAppSiteBundle.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle.php
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/MyAppSiteExtension.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
 
-echo "** we define application bundle in app/AppKernel.php file **"
-if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle()" app/AppKernel.php; then
-    sed -i '/SensioFrameworkExtraBundle(),/a \            # application' app/AppKernel.php
-    sed -i "/# tools/a \            new ${DOMAINE}\\${MYAPP_BUNDLE_NAME}Bundle\\${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle()," app/AppKernel.php
-fi
-
 echo "** we add FOSUser routing **"
 if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml" app/config/routing.yml; then
     echo "$(cat $DIR/provisioners/shell/plateform/site/addRoutingExo1.yml)" >> app/config/routing.yml

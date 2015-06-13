@@ -5,7 +5,7 @@ chmod -R +x $DIR
 
 INSTALL_USERWWW="/var/www/framework/fm-symfony"
 PLATEFORM_INSTALL_TYPE="composer"
-PLATEFORM_VERSION="2.4.0"
+PLATEFORM_INSTALL_VERSION="2.4.0"
 PLATEFORM_PROJET_NAME="sfproject24"
 PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
 PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
@@ -27,7 +27,7 @@ if [ ! -d $PLATEFORM_PROJET_NAME ]; then
     case $PLATEFORM_INSTALL_TYPE in
         'composer' ) 
             curl -s https://getcomposer.org/installer | php
-            php composer.phar create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_VERSION
+            php composer.phar create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'stack' )
@@ -61,7 +61,7 @@ fi
 
 echo "**** we modify parameters.yml.dist ****"
 sed -i '/database_/d' app/config/parameters.yml.dist # delete lines witch contain "database"_ string
-sed -i "/parameters/r $DIR/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
+sed -i "/parameters:/r $DIR/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
 sed -i "s/myproject/${PLATEFORM_PROJET_NAME_LOWER}/g" app/config/parameters.yml.dist
 
 echo "**** we create parameters.yml ****"
@@ -528,6 +528,7 @@ fi
 if [ ! -f composer.phar ]; then
     echo "**** we install/update the composer file ****"
     wget https://getcomposer.org/composer.phar -O ./composer.phar
+    #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "update composer.phar"
     php composer.phar self-update    

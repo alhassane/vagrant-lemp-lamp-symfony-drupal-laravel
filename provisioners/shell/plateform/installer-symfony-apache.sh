@@ -1,19 +1,20 @@
-#!/bin/sh
+#!/bin/bash
+DIR=$1
+PLATEFORM_INSTALL_NAME=$2
+PLATEFORM_INSTALL_TYPE=$3
+PLATEFORM_INSTALL_VERSION=$4
+PLATEFORM_PROJET_NAME=$5
+PLATEFORM_PROJET_GIT=$6
+INSTALL_USERWWW=$7
+source $DIR/provisioners/shell/env.sh
 
-DIR=$(pwd)
-chmod -R +x $DIR
-
-INSTALL_USERWWW="/var/www/framework/fm-symfony"
-PLATEFORM_INSTALL_TYPE="composer"
-PLATEFORM_INSTALL_VERSION="2.4.0"
-PLATEFORM_PROJET_NAME="sfproject24"
 PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
 PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
 DATABASE_NAME="symfony_${PLATEFORM_PROJET_NAME_LOWER}"
 DATABASE_NAME_TEST="symfony_${PLATEFORM_PROJET_NAME_LOWER}_test"
-DOMAINE="Dirisi"
-MYAPP_BUNDLE_NAME="Website"
-MYAPP_PREFIX="dirisi"
+DOMAINE="App"
+MYAPP_BUNDLE_NAME="Site"
+MYAPP_PREFIX="fr"
 FOSUSER_PREFIX="$MYAPP_PREFIX/admin"
 
 echo "**** we create directories ****"
@@ -23,26 +24,27 @@ fi
 cd $INSTALL_USERWWW
 
 echo "**** we download artifact project ****"
-if [ ! -d $PLATEFORM_PROJET_NAME ]; then
+if [ ! -f $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME/composer.json ]; then
     case $PLATEFORM_INSTALL_TYPE in
-        'composer' ) 
-            curl -s https://getcomposer.org/installer | php
-            php composer.phar create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
+        'composer' )
+            #curl -s https://getcomposer.org/installer | php
+            #wget https://getcomposer.org/composer.phar -O ./composer.phar
+            composer create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'stack' )
             curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
             chmod a+x /usr/local/bin/symfony
-            symfony new $PLATEFORM_PROJET_NAME $PLATEFORM_VERSION
+            symfony new $PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'tar' )
-            mkdir -p $PLATEFORM_PROJET_NAME
+            mkdir  $PLATEFORM_PROJET_NAME
             cd $PLATEFORM_PROJET_NAME
-            wget http://symfony.com/download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
-            tar -zxvf download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
+            wget http://symfony.com/download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
+            tar -zxvf download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
             mv Symfony/* ./
-            #rm -rf download?v=Symfony_Standard_Vendors_$PLATEFORM_VERSION.tgz
+            rm -rf download?v=Symfony_Standard_Vendors_$PLATEFORM_INSTALL_VERSION.tgz
             rm -rf Symfony
         ;;
     esac
@@ -50,10 +52,8 @@ else
     cd $PLATEFORM_PROJET_NAME
 fi
 
-#echo $(pwd)
-
 echo "**** we create default directories ****"
-if [ ! -d app/cache ]; then
+if [ ! -d app/cachesfynx ]; then
     mkdir -p app/cache
     mkdir -p app/logs
     mkdir -p web/uploads/media
@@ -61,7 +61,7 @@ fi
 
 echo "**** we modify parameters.yml.dist ****"
 sed -i '/database_/d' app/config/parameters.yml.dist # delete lines witch contain "database"_ string
-sed -i "/parameters:/r $DIR/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
+sed -i "/parameters:/r $DIR/provisioners/shell/plateform/artifacts/parameters.yml" app/config/parameters.yml.dist # we add lines contained in parameters.yml
 sed -i "s/myproject/${PLATEFORM_PROJET_NAME_LOWER}/g" app/config/parameters.yml.dist
 
 echo "**** we create parameters.yml ****"
@@ -78,7 +78,7 @@ fi
 
 echo "** we add config in AppKernel **"
 if ! grep -q "getContainerBaseClass" app/AppKernel.php; then
-    sed  -i -e "/registerContainerConfiguration/r $DIR/artifacts/appkernel.txt" -e //N app/AppKernel.php
+    sed  -i -e "/registerContainerConfiguration/r $DIR/provisioners/shell/plateform/artifacts/appkernel.txt" -e //N app/AppKernel.php
 fi
 
 echo "** we modify config.yml **"
@@ -109,7 +109,7 @@ printenv | grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
 
 echo "**** we add test config for database ****"
 if ! grep -q "doctrine" app/config/config_test.yml; then
-    echo "$(cat $DIR/artifacts/config_test.yml)" >> app/config/config_test.yml
+    echo "$(cat $DIR/provisioners/shell/plateform/artifacts/config_test.yml)" >> app/config/config_test.yml
 fi
 
 # we create the virtualhiost of sfynx for nginx
@@ -247,17 +247,17 @@ php app/console doctrine:database:create
 php app/console doctrine:database:create --env=test
 
 echo "**** we install bundles and their dependancies ****"
-$DIR/doctrine/doctrine-extension.sh "$DIR" "$PLATEFORM_VERSION"
-$DIR/jms/jms.sh "$DIR" "$PLATEFORM_VERSION"
-$DIR/fosuser/fosuser.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
-$DIR/fosrest/fosrest.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"
-$DIR/site/install.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX" 
-#$DIR/qa/qa.sh "$DIR" "$PLATEFORM_VERSION"
+$DIR/provisioners/shell/plateform/doctrine/doctrine-extension.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
+$DIR/provisioners/shell/plateform/jms/jms.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
+$DIR/provisioners/shell/plateform/fosuser/fosuser.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
+$DIR/provisioners/shell/plateform/site/install.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
+#$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"
+#$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 
 echo "**** we lauch the composer ****"
-php -d memory_limit=1024M composer.phar install --no-interaction
+composer install --no-interaction
 echo "**** Generating optimized autoload files ****"
-php composer.phar dump-autoload --optimize
+composer dump-autoload --optimize
 
 echo "**** we remove cache files ****"
 rm -rf app/cache/*

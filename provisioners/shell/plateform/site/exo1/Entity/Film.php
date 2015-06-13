@@ -17,14 +17,14 @@ class Film
     private $id;
     
     /**
-     * @ORM\Column(type="string",length="255")
+     * @ORM\Column(type="string",length=255)
      * @Assert\NotBlank()
-     * @Assert\MinLength(3)
+     * @Assert\Length(min = 3)
      */    
     private $titre;
 
     /**
-     * @ORM\Column(type="string",length="500")
+     * @ORM\Column(type="string",length=500)
      */    
     private $description;
 
