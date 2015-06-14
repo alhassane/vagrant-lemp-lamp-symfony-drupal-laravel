@@ -1,7 +1,7 @@
 
         # defaut login area for standard users   
         main:
-            pattern: .*
+            pattern: ^/myapp
             form_login:
                 provider: fos_userbundle
                 use_forward: false

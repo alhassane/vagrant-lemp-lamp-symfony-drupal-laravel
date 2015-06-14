@@ -26,6 +26,8 @@ find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/myapp/
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyAppAuthBundle/${DOMAINE}AuthBundle/g" {} \;
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/MyAppSiteBundle.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle.php
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/MyAppSiteExtension.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
+sed -i "s/XmlFileLoader/YamlFileLoader/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
+sed -i "s/services.xml/services.yml/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
 
 echo "** we add FOSUser routing **"
 if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml" app/config/routing.yml; then

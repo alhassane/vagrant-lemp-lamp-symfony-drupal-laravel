@@ -16,7 +16,7 @@ if [ ! -d src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle ]; then
     php app/console generate:bundle --namespace="${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle" --bundle-name="${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle" --format=annotation --structure --dir=src --no-interaction
 fi
 
-echo "** we add twig resource files **"
+echo "** we modify artifatcs **"
 cp -R $DIR/provisioners/shell/plateform/site/exo1/* src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyApp\\\SiteBundle/${DOMAINE}\\\\${MYAPP_BUNDLE_NAME}Bundle/g" {} \;
 #find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/DirisiWebsiteBundle/MyApp\\\SiteBundle/g" {} \;
@@ -26,6 +26,8 @@ find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/myapp/
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyAppAuthBundle/${DOMAINE}AuthBundle/g" {} \;
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/MyAppSiteBundle.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle.php
 mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/MyAppSiteExtension.php src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
+sed -i "s/XmlFileLoader/YamlFileLoader/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
+sed -i "s/services.xml/services.yml/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
 
 echo "** we add FOSUser routing **"
 if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml" app/config/routing.yml; then
