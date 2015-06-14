@@ -486,9 +486,9 @@ php app/console propel:sql:insert --env test --force
 echo "**** we run the phing script to initialize the project ****"
 bin/phing -f app/phing/initialize.xml rebuild
 
-sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/dbNbi-28-05-2015.sql"
-sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploadsNbi-28-05-2015.tar.gz" "$DIR"
-sudo $DIR/provisioners/shell/plateform/importJR.sh "$DIR/DUMP/jrNbi-28-05-2015.tar.gz" 
+sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump.sql"
+sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads.tar.gz" "$DIR"
+sudo $DIR/provisioners/shell/plateform/importJR.sh "$DIR/DUMP/jr.tar.gz" 
 
 #echo "***** Start service jackrabbit"
 sudo service jackrabbit start
