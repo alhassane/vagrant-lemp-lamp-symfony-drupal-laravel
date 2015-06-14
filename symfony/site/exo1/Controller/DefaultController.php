@@ -5,6 +5,10 @@ namespace MyApp\SiteBundle\Controller;
 use Symfony\Component\DependencyInjection\ContainerAware,
     Symfony\Component\HttpFoundation\RedirectResponse;
 
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Symfony\Component\HttpFoundation\Cookie;
+use Symfony\Component\HttpFoundation\Response;
+
 use MyApp\SiteBundle\Entity\Categorie,
     MyApp\SiteBundle\Entity\Acteur,
     MyApp\SiteBundle\Entity\Film
@@ -28,6 +32,10 @@ class DefaultController extends ContainerAware
     
     public function choisirLangueAction($langue = null)
     {
+        $dateExpire = time() + intVal(604800);
+        //$dateExpire = new \DateTime("NOW");
+        //$dateExpire->add(new \DateInterval('PT4H'));
+        
         if($langue != null)
         {
             // On enregistre la langue en session
@@ -37,9 +45,12 @@ class DefaultController extends ContainerAware
         // on tente de rediriger vers la page d’origine
         $url = $this->container->get('request')->headers->get('referer');
         if(empty($url)) {
-            $url = $this->container->get('router')->generate('myapp_accueil');
+            $url = $this->container->get('router')->generate('app_accueil');
         }
-        return new RedirectResponse($url);
+        $response = new RedirectResponse($url, 302);
+        $response->headers->setCookie(new Cookie('_locale', $langue, $dateExpire));
+        
+        return $response;
     }
     
     public function enregistrerDonnees() {

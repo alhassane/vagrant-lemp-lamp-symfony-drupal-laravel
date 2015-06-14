@@ -34,6 +34,12 @@ if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml"
     sed -i "s/myapp/${MYAPP_PREFIX}/g" app/config/routing.yml
 fi
 
+echo "we add parameters"
+if ! grep -q "switch_language_authorized" app/config/routing.yml; then
+    echo "    switch_language_authorized: true" >> app/config/parameters.yml
+    echo "    all_locales: ['fr', 'en']" >> app/config/parameters.yml
+fi
+
 echo "** we create datatable in database **"
 rm -rf app/cache/*
 php app/console doctrine:schema:create --env=dev --process-isolation  -v

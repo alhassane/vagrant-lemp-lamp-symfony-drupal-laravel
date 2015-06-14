@@ -1,0 +1,20 @@
+parameters:
+    myapp.handler.exception.class: MyApp\SiteBundle\EventListener\HandlerException
+    myapp.handler.localeHandler.class: MyApp\SiteBundle\EventListener\HandlerLocale
+
+services:       
+    #               
+    # handlers Configuration
+    #           
+    myapp.exception_handler:
+        class: %myapp.handler.exception.class%
+        arguments: [@templating, @kernel, @service_container]
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException } 
+            
+    myapp.locale_handler:
+        class: %myapp.handler.localeHandler.class%
+        arguments: [%locale%, @service_container]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 66 }
+            

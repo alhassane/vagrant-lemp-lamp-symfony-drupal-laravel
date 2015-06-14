@@ -12,9 +12,9 @@ PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower(
 PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
 DATABASE_NAME="symfony_${PLATEFORM_PROJET_NAME_LOWER}"
 DATABASE_NAME_TEST="symfony_${PLATEFORM_PROJET_NAME_LOWER}_test"
-DOMAINE="App"
-MYAPP_BUNDLE_NAME="Site"
-MYAPP_PREFIX="fr"
+DOMAINE="Dirisi" #App
+MYAPP_BUNDLE_NAME="Website" #Site
+MYAPP_PREFIX="dirisi" #fr
 FOSUSER_PREFIX="$MYAPP_PREFIX/admin"
 
 echo "**** we create directories ****"
@@ -524,7 +524,7 @@ if [ ! -f composer.phar ]; then
     #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "update composer.phar"
-    php composer.phar self-update    
+    #php composer.phar self-update    
 fi
 
 echo "**** we create database ****"
@@ -536,7 +536,7 @@ $DIR/provisioners/shell/plateform/doctrine/doctrine-extension.sh "$DIR" "$PLATEF
 $DIR/provisioners/shell/plateform/jms/jms.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 $DIR/provisioners/shell/plateform/fosuser/fosuser.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
 $DIR/provisioners/shell/plateform/site/install.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
-$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"
+#$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"
 #$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 
 echo "**** we lauch the composer ****"
