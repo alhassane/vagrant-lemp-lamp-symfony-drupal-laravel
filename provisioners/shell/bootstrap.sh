@@ -36,7 +36,10 @@ sudo chmod -R +x $DIR
 sudo chmod -R 777 $DIR
 sudo chmod 755 /etc/apt/sources.list
 
-#curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+echo "**** we install/update the composer file ****"
+#wget https://getcomposer.org/composer.phar -O ./composer.phar
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+
 #$DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$PLATEFORM_INSTALL_NAME" "$PLATEFORM_INSTALL_TYPE" "$PLATEFORM_INSTALL_VERSION" "$PLATEFORM_PROJET_NAME" "$PLATEFORM_PROJET_GIT" "$INSTALL_USERWWW"
 #exit 1
 
