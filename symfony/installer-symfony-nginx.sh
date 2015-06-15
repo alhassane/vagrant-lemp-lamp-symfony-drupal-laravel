@@ -16,6 +16,11 @@ MYAPP_BUNDLE_NAME="Website"
 MYAPP_PREFIX="dirisi"
 FOSUSER_PREFIX="$MYAPP_PREFIX/admin"
 
+echo "Removing Windows newlines on Linux (sed vs. awk)"
+find $DIR/* -type f -exec sed -i  "s/^M//" {} \;
+find $DIR/* -type f -exec sed -i  "s/\r\n//" {} \;
+find $DIR/* -type f -exec sed -i  "s/\r//" {} \;
+
 echo "**** we create directories ****"
 if [ ! -d $INSTALL_USERWWW ]; then
     mkdir -p $INSTALL_USERWWW
