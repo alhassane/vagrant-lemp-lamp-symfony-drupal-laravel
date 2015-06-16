@@ -48,7 +48,3 @@ php app/console doctrine:schema:create --env=dev --process-isolation  -v
 php app/console doctrine:schema:update --env=dev --force
 php app/console doctrine:schema:create --env=test --process-isolation  -v
 php app/console doctrine:schema:update --env=test --force
-
-#echo "** we add JMS Security configuration **"
-# since sf 2.4
-#php app/console config:dump-reference FOSUserBundle --format=yaml 1>> app/config/config.yml

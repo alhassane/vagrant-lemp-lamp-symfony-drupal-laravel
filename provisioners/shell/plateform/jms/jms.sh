@@ -33,7 +33,7 @@ fi
 
 echo "** we add JMSDebugging configuration **"
 if ! grep -q "jms_debugging" app/config/config.yml; then
-    echo "$(cat $DIR/provisioners/shell/plateform/jms/addConfig.yml)" >> app/config/config.yml
+    echo "$(cat $DIR/provisioners/shell/plateform/jms/addConfig.yml)" >> app/config/config_dev.yml
 fi
 
 echo "** we add config in AppKernel **"
