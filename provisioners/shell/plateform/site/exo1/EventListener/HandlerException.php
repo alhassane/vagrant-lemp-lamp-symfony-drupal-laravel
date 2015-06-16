@@ -17,6 +17,8 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Bundle\FrameworkBundle\Templating\EngineInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 /**
  * Custom Exception handler.
@@ -81,20 +83,27 @@ class HandlerException
         if ('prod' == $this->kernel->getEnvironment()) {
             // exception object
             $exception = $event->getException();
-            // new Response object
-            $response = new Response();
-            // HttpExceptionInterface is a special type of exception
-            // that holds status code and header details
-            if (method_exists($exception, "getStatusCode")) {
-                $response->setStatusCode($exception->getStatusCode());
-            } else {
-                $response->setStatusCode('404');
+            if ($exception instanceof HttpExceptionInterface) {
+                // new Response object
+                $response = new Response();
+
+                //$kernel = $event->getKernel();
+                //$requestDuplicate = $event->getRequest()->duplicate(null, null, ['_controller' => 'MyAppSiteBundle:Default:exception']);
+                //$response = $kernel->handle($requestDuplicate, HttpKernelInterface::SUB_REQUEST);
+
+                // HttpExceptionInterface is a special type of exception
+                // that holds status code and header details
+                if (method_exists($exception, "getStatusCode")) {
+                    $response->setStatusCode($exception->getStatusCode());
+                } else {
+                    $response->setStatusCode(404);
+                }
+                if (method_exists($response, "getHeaders")) {
+                    $response->headers->replace($exception->getHeaders());
+                }
+                // set the new $response object to the $event
+                $event->setResponse($response);
             }
-            if (method_exists($response, "getHeaders")) {
-                $response->headers->replace($exception->getHeaders());
-            }
-            // set the new $response object to the $event
-            $event->setResponse($response);
         }
     }
 }
