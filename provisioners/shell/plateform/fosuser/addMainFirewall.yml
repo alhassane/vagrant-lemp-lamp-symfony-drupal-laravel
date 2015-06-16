@@ -8,7 +8,8 @@
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
                 login_path: /myapp/login
                 check_path: /myapp/login_check
-                failure_path: null #/login_failure
+                failure_path: /myapp/login #/login_failure
+                always_use_default_target_path: true
                 #success_handler: sfynx.auth.authentication_handler
                 remember_me: false
                 default_target_path: /myapp
