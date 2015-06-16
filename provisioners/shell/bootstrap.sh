@@ -24,10 +24,14 @@ is_swap=${19}
 
 source $DIR/provisioners/shell/env.sh
 
+PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
+PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
+DATABASE_NAME="symfony_${PLATEFORM_PROJET_NAME_LOWER}"
+
 echo "Removing Windows newlines on Linux (sed vs. awk)"
-find $DIR/provisioners/* -type f -exec sed -i  "s/^M//" {} \;
-find $DIR/provisioners/* -type f -exec sed -i  "s/\r\n//" {} \;
-find $DIR/provisioners/* -type f -exec sed -i  "s/\r//" {} \;
+#find $DIR/provisioners/* -type f -exec sed -i  's/^M//g' {} \;
+#find $DIR/provisioners/* -type f -exec sed -i  's/\r\n//g' {} \;
+#find $DIR/provisioners/* -type f -exec sed -i  s/\r//g' {} \;
 
 echo "***** We set permmissions for all scriptshell"
 mkdir -p /tmp
@@ -38,6 +42,7 @@ sudo chmod 755 /etc/apt/sources.list
 
 echo "**** we install/update the composer file ****"
 #wget https://getcomposer.org/composer.phar -O ./composer.phar
+cd /tmp
 curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 #$DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$PLATEFORM_INSTALL_NAME" "$PLATEFORM_INSTALL_TYPE" "$PLATEFORM_INSTALL_VERSION" "$PLATEFORM_PROJET_NAME" "$PLATEFORM_PROJET_GIT" "$INSTALL_USERWWW"
@@ -76,12 +81,12 @@ $DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$
 
 echo "we install the mysql dump files if the DUMP/mysqldump.sql file exist"
 if [ -f $DIR/DUMP/mysqldump.sql ]; then
-    sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump.sql"
+    sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump.sql" "$DATABASE_NAME"
 fi
 
 echo "we install all uploads files if the DUMP/uploads.tar.gz file exist"
 if [ -f $DIR/DUMP/uploads.sql ]; then
-    sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads.tar.gz" "$DIR"
+    sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads.tar.gz" "$DIR" "$INSTALL_USERWWW" "$PLATEFORM_PROJET_NAME"
 fi
 
 echo "we install the jackribbit database if the DUMP/jr.tar.gz file exist"
