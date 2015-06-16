@@ -29,9 +29,7 @@ PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper(
 DATABASE_NAME="symfony_${PLATEFORM_PROJET_NAME_LOWER}"
 
 echo "Removing Windows newlines on Linux (sed vs. awk)"
-#find $DIR/provisioners/* -type f -exec sed -i  's/^M//g' {} \;
-#find $DIR/provisioners/* -type f -exec sed -i  's/\r\n//g' {} \;
-#find $DIR/provisioners/* -type f -exec sed -i  s/\r//g' {} \;
+#find $DIR/provisioners/* -type f -exec dos2unix {} \;
 
 echo "***** We set permmissions for all scriptshell"
 mkdir -p /tmp
@@ -100,4 +98,3 @@ sudo apt-get -y clean > /dev/null
 sudo apt-get -y autoclean > /dev/null
 
 echo "Finished provisioning."
-
