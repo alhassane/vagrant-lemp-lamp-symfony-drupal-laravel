@@ -8,12 +8,8 @@ echo "*** PHP ***"
 #
 echo "Updating PHP repository"
 add-apt-repository ppa:ondrej/php5 -y > /dev/null
-apt-get -y update > /dev/null
-apt-get -y dist-upgrade > /dev/null
-
-#
-echo "Install PHP pear"
-apt-get -y install php-pear
+sudo apt-get -y update > /dev/null
+sudo apt-get -y dist-upgrade > /dev/null
 
 #
 echo "Installing PHP"
@@ -21,7 +17,7 @@ apt-get -y install php5-common php5-dev php5-cli php5-fpm
 
 #
 echo "Install PHP pear"
-apt-get -y install php-pear
+sudo apt-get -y install php-pear
 
 #
 echo "Installing PHP extensions"
@@ -29,7 +25,7 @@ apt-get -y install php5-curl php5-gd php5-geoip php5-imagick php5-imap php5-intl
 apt-get -y install php-pear php5-imagick php5-xdebug php5-ming php5-ps php5-pspell php5-recode php5-snmp php5-tidy php5-xmlrpc php5-xsl php5-cli php5-idn php5-openssl php-soap
 apt-get -y install libapache2-mod-php5 php5-mysqlnd php5-mongo php5-memcache
 apt-get -y install php5-memcached gearman
-pecl install timezonedb
+sudo pecl install timezonedb
 
 echo "Install PECL HTTP (depends on php-pear, php5-dev, libcurl4-openssl-dev)"
 printf "\n" | pecl install pecl_http
