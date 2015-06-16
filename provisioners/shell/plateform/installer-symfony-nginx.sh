@@ -537,7 +537,7 @@ $DIR/provisioners/shell/plateform/jms/jms.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 $DIR/provisioners/shell/plateform/fosuser/fosuser.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
 $DIR/provisioners/shell/plateform/site/install.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
 #$DIR/provisioners/shell/plateform/fosrest/fosrest.sh "$DIR" "$PLATEFORM_INSTALL_VERSION" "$DOMAINE"
-#$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
+$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 
 echo "**** we lauch the composer ****"
 composer install --no-interaction
