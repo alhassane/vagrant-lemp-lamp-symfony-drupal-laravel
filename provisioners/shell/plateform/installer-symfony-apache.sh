@@ -28,7 +28,7 @@ if [ ! -f $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME/composer.json ]; then
     case $PLATEFORM_INSTALL_TYPE in
         'composer' )
             #curl -s https://getcomposer.org/installer | php
-            #wget https://getcomposer.org/composer.phar -O ./composer.phar
+            wget https://getcomposer.org/composer.phar -O ./composer.phar
             composer create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
