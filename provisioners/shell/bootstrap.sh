@@ -38,9 +38,6 @@ sudo chmod -R +x $DIR
 sudo chmod -R 777 $DIR
 sudo chmod 755 /etc/apt/sources.list
 
-#$DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$PLATEFORM_INSTALL_NAME" "$PLATEFORM_INSTALL_TYPE" "$PLATEFORM_INSTALL_VERSION" "$PLATEFORM_PROJET_NAME" "$PLATEFORM_PROJET_GIT" "$INSTALL_USERWWW"
-#exit 1
-
 echo "***** First we copy own sources.list to box *****"
 if [ -f $DIR/provisioners/shell/etc/apt/$DISTRIB/sources.list ];
 then
