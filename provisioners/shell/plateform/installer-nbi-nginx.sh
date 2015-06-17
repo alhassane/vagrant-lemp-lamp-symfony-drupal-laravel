@@ -145,7 +145,7 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         fastcgi_param  HTTPS off;
-        # fastcgi_param PHP_VALUE "auto_prepend_file=$INSTALL_USERWWW/xhprof/external/header.php \n auto_append_file=$INSTALL_USERWWW/xhprof/external/footer.php";
+        # fastcgi_param PHP_VALUE "auto_prepend_file=/websites/xhprof/external/header.php \n auto_append_file=/websites/xhprof/external/footer.php";
         fastcgi_param SYMFONY__DATABASE__NAME__ENV BelProd_dev;
         fastcgi_param SYMFONY__DATABASE__USER__ENV root;
         fastcgi_param SYMFONY__DATABASE__PASSWORD__ENV pacman;
@@ -271,7 +271,7 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         fastcgi_param  HTTPS off;
-        # fastcgi_param PHP_VALUE "auto_prepend_file=$INSTALL_USERWWW/xhprof/external/header.php \n auto_append_file=$INSTALL_USERWWW/xhprof/external/footer.php";
+        # fastcgi_param PHP_VALUE "auto_prepend_file=/websites/xhprof/external/header.php \n auto_append_file=/websites/xhprof/external/footer.php";
         fastcgi_param SYMFONY__DATABASE__NAME__ENV BelProd_dev;
         fastcgi_param SYMFONY__DATABASE__USER__ENV root;
         fastcgi_param SYMFONY__DATABASE__PASSWORD__ENV pacman;
@@ -397,7 +397,7 @@ server {
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
         fastcgi_param  HTTPS off;
-        # fastcgi_param PHP_VALUE "auto_prepend_file=$INSTALL_USERWWW/xhprof/external/header.php \n auto_append_file=$INSTALL_USERWWW/xhprof/external/footer.php";
+        # fastcgi_param PHP_VALUE "auto_prepend_file=/websites/xhprof/external/header.php \n auto_append_file=/websites/xhprof/external/footer.php";
         fastcgi_param SYMFONY__DATABASE__NAME__ENV nbiBelProd;
         fastcgi_param SYMFONY__DATABASE__USER__ENV root;
         fastcgi_param SYMFONY__DATABASE__PASSWORD__ENV pacman;
