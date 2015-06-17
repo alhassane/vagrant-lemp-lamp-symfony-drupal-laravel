@@ -37,9 +37,11 @@ if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml"
 fi
 
 echo "we add parameters"
-if ! grep -q "switch_language_authorized" app/config/routing.yml; then
+if ! grep -q "switch_language_authorized" app/config/parameters.yml; then
     echo "    switch_language_authorized: true" >> app/config/parameters.yml
     echo "    all_locales: ['fr', 'en']" >> app/config/parameters.yml
+    echo "    switch_language_authorized: true" >> app/config/parameters.yml.dist
+    echo "    all_locales: ['fr', 'en']" >> app/config/parameters.yml.dist
 fi
 
 echo "** we create datatable in database **"
@@ -48,7 +50,3 @@ php app/console doctrine:schema:create --env=dev --process-isolation  -v
 php app/console doctrine:schema:update --env=dev --force
 php app/console doctrine:schema:create --env=test --process-isolation  -v
 php app/console doctrine:schema:update --env=test --force
-
-#echo "** we add JMS Security configuration **"
-# since sf 2.4
-#php app/console config:dump-reference FOSUserBundle --format=yaml 1>> app/config/config.yml

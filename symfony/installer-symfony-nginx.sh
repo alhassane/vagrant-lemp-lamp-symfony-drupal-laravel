@@ -17,9 +17,7 @@ MYAPP_PREFIX="dirisi"
 FOSUSER_PREFIX="$MYAPP_PREFIX/admin"
 
 echo "Removing Windows newlines on Linux (sed vs. awk)"
-find $DIR/* -type f -exec sed -i  "s/^M//" {} \;
-find $DIR/* -type f -exec sed -i  "s/\r\n//" {} \;
-find $DIR/* -type f -exec sed -i  "s/\r//" {} \;
+#find $DIR/provisioners/* -type f -exec dos2unix {} \;
 
 echo "**** we create directories ****"
 if [ ! -d $INSTALL_USERWWW ]; then
@@ -31,8 +29,9 @@ echo "**** we download artifact project ****"
 if [ ! -d $PLATEFORM_PROJET_NAME ]; then
     case $PLATEFORM_INSTALL_TYPE in
         'composer' ) 
-            curl -s https://getcomposer.org/installer | php
-            php composer.phar create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
+            #curl -s https://getcomposer.org/installer | php
+            wget https://getcomposer.org/composer.phar -O ./composer.phar
+            composer create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
         ;;
         'stack' )
@@ -56,6 +55,10 @@ else
 fi
 
 #echo $(pwd)
+
+echo "**** we install/update the composer file ****"
+#wget https://getcomposer.org/composer.phar -O ./composer.phar
+curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 echo "**** we create default directories ****"
 if [ ! -d app/cache ]; then
@@ -547,14 +550,14 @@ echo "**** we install bundles and their dependancies ****"
 $DIR/doctrine/doctrine-extension.sh "$DIR" "$PLATEFORM_VERSION"
 $DIR/jms/jms.sh "$DIR" "$PLATEFORM_VERSION"
 $DIR/fosuser/fosuser.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE" "$FOSUSER_PREFIX" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
+$DIR/site/install.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX"
 $DIR/fosrest/fosrest.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"
-$DIR/site/install.sh "$DIR" "$PLATEFORM_VERSION" "$DOMAINE"  "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX" 
 #$DIR/qa/qa.sh "$DIR" "$PLATEFORM_VERSION"
 
 echo "**** we lauch the composer ****"
-php -d memory_limit=1024M composer.phar install --no-interaction
+composer install --no-interaction
 echo "**** Generating optimized autoload files ****"
-php composer.phar dump-autoload --optimize
+composer dump-autoload --optimize
 
 echo "**** we remove cache files ****"
 rm -rf app/cache/*
