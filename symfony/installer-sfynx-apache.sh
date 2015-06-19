@@ -1,12 +1,12 @@
 #!/bin/bash
-DIR=$1
-PLATEFORM_INSTALL_NAME=$2
-PLATEFORM_INSTALL_TYPE=$3
-PLATEFORM_INSTALL_VERSION=$4
-PLATEFORM_PROJET_NAME=$5
-PLATEFORM_PROJET_GIT=$6
-INSTALL_USERWWW=$7
-source $DIR/provisioners/shell/env.sh
+PLATEFORM_PROJET_NAME="sfynxproject"
+PLATEFORM_PROJET_GIT="https://github.com/pigroupe/cmf-sfynx.git"
+INSTALL_USERWWW="/var/www"
+#if [ $# -eq 0 ]; then # s'il n'y a pas de paramètres
+#    read INSTALL_USERWWW # on saisis la valeur
+#else
+#    INSTALL_USERWWW=$1
+#fi
 
 PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
 PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string

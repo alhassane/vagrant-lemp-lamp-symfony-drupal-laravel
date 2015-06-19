@@ -21,6 +21,8 @@ vagrant reload --provision
 
 # create box from existing vm
 vagrant package --base SPECIFIC_NAME_FOR_VM --output /yourfolder/OUTPUT_BOX_NAME.box
+vagrant box add OUTPUT_BOX_NAME /yourfolder/OUTPUT_BOX_NAME.box
+vagrant init OUTPUT_BOX_NAME
 
 # add ubuntu box
 vagrant package –-base Ubuntu-14.04-64-Desktop  # Create Vagrant Base Box
@@ -50,3 +52,10 @@ error. This is normally because the SSH user doesn't have permission
 to write to the destination location. Alternately, the user running
 Vagrant on the host machine may not have permission to read the file.
 solution>>>>  vagrant ssh =>  sudo chmod -R 777 /tmp => exit
+
+
+#
+VBoxManage list vms
+VBoxManage showvminfo "BoxName"
+
+#
