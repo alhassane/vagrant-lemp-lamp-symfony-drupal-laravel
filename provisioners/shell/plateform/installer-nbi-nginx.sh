@@ -476,6 +476,41 @@ composer install --no-interaction --with-dependencies
 echo "**** Generating optimized autoload files ****"
 composer dump-autoload --optimize
 
+echo "**** we remove cache files ****"
+rm -rf app/cache/*
+rm -rf app/logs/*
+
+echo "**** we set all necessary permissions ****"
+# Utiliser l'ACL sur un système qui supporte chmod +a
+#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+#sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+#sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
+
+# Utiliser l'ACL sur un système qui ne supporte pas chmod +a
+#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+HTTPDUSER=$(ps -o user= -p $$ | awk '{print $1}')
+sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
+
+# sans utiliser ACL
+## Définit une permission 0775 aux fichiers
+#echo "umask(0002);" | sudo tee --prepend app/console
+#echo "umask(0002);" | sudo tee --prepend web/app_dev.php
+#echo "umask(0002);" | sudo tee --prepend web/app.php
+## Définit une permission 0777 aux fichiers
+#echo "umask(0000);" | sudo tee --prepend app/console
+#echo "umask(0000);" | sudo tee --prepend web/app_dev.php
+#echo "umask(0000);" | sudo tee --prepend web/app.php
+
+sudo usermod -aG www-data $HTTPDUSER
+sudo chown -R $HTTPDUSER:www-data $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME
+sudo chmod -R 0755 $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME
+sudo chmod -R 0775 app/config/parameters.yml
+sudo chmod -R 0775 app/cache
+sudo chmod -R 0775 app/logs
+sudo chmod -R 0775 web/uploads
+
+
 echo "**** we create database ****"
 php app/console propel:build
 php app/console propel:database:create

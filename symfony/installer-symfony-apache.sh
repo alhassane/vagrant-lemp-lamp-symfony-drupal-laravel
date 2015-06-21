@@ -270,7 +270,8 @@ echo "**** we set all necessary permissions ****"
 #sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 # Utiliser l'ACL sur un système qui ne supporte pas chmod +a
-HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+HTTPDUSER=$(ps -o user= -p $$ | awk '{print $1}')
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
@@ -284,18 +285,13 @@ sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 #echo "umask(0000);" | sudo tee --prepend web/app_dev.php
 #echo "umask(0000);" | sudo tee --prepend web/app.php
 
-
-
-# permission
-#sudo chown -R root:www-data app/cache
-#sudo chown -R root:www-data app/logs
-#sudo chown -R root:www-data app/config/parameters.yml
-#sudo chown -R root:www-data web/uploads
-#sudo chmod -R 775 app/config/parameters.yml
-#sudo chmod -R 775 app/cache
-#sudo chmod -R 775 app/logs
-#sudo chmod -R 775 web/uploads
-#sudo chown -R www-data:www-data $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME
+sudo usermod -aG www-data $HTTPDUSER
+sudo chown -R $HTTPDUSER:www-data $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME
+sudo chmod -R 0755 $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME
+sudo chmod -R 0775 app/config/parameters.yml
+sudo chmod -R 0775 app/cache
+sudo chmod -R 0775 app/logs
+sudo chmod -R 0775 web/uploads
 
 echo "**** we create database ****"
 php app/console doctrine:database:create
