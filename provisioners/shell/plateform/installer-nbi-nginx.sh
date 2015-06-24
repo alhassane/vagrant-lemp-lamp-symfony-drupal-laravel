@@ -472,6 +472,7 @@ sudo service nginx restart
 #    php composer.phar self-update    
 #fi
 echo "**** we lauch the composer ****"
+sudo composer self-update
 composer install --no-interaction --with-dependencies
 echo "**** Generating optimized autoload files ****"
 composer dump-autoload --optimize

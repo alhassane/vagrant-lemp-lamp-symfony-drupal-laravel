@@ -255,6 +255,7 @@ $DIR/provisioners/shell/plateform/site/install.sh "$DIR" "$PLATEFORM_INSTALL_VER
 #$DIR/provisioners/shell/plateform/qa/qa.sh "$DIR" "$PLATEFORM_INSTALL_VERSION"
 
 echo "**** we lauch the composer ****"
+sudo composer self-update
 composer install --no-interaction
 echo "**** Generating optimized autoload files ****"
 composer dump-autoload --optimize
@@ -299,6 +300,7 @@ php app/console doctrine:database:create
 echo "**** we install assetic and asset files ****"
 php app/console assets:install
 php app/console assetic:dump
+php app/console cache:clear
 
 echo "** we detect mapping error execute **"
 php app/console doctrine:mapping:info

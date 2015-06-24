@@ -299,6 +299,7 @@ php app/console doctrine:database:create
 echo "**** we install assetic and asset files ****"
 php app/console assets:install
 php app/console assetic:dump
+php app/console cache:clear
 
 echo "** we detect mapping error execute **"
 php app/console doctrine:mapping:info
