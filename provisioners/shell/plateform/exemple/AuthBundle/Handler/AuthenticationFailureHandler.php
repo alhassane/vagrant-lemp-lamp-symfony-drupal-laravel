@@ -12,7 +12,6 @@ use Symfony\Component\Security\Http\HttpUtils;
 
 class AuthenticationFailureHandler extends DefaultAuthenticationFailureHandler
 {
-
     public function __construct(
             HttpKernelInterface $httpKernel,
             HttpUtils $httpUtils,

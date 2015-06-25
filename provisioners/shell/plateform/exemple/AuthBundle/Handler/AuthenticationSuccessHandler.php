@@ -11,6 +11,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\Router;
 
+use Dirisi\AuthBundle\Event\ResponseEvent;
+use Dirisi\AuthBundle\DirisiAuthEvents;
+
 class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler 
 {
     private $security;
@@ -43,8 +46,12 @@ class AuthenticationSuccessHandler extends DefaultAuthenticationSuccessHandler
                 $response = parent::onAuthenticationSuccess( $request, $token);   
             }
         }			
-        $response->headers->setCookie(new Cookie('succes_connexion', $token->getUsername(), 0));
+        $response->headers->setCookie(new Cookie('success_connection', $token->getUsername(), 0));
                 
+//        $event_response = new ResponseEvent($response, $request, $this->getUser(), $this->locale);
+//        $this->container->get('event_dispatcher')->dispatch(DirisiAuthEvents::HANDLER_LOGIN_CHANGERESPONSE, $event_response);
+//        $response       = $event_response->getResponse();
+        
         return $response;
     }
 }

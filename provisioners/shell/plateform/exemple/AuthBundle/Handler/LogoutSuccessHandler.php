@@ -37,7 +37,7 @@ class LogoutSuccessHandler implements LogoutHandlerInterface
             //$referer_url = $request->headers->get('referer');
             //$response = new RedirectResponse($referer_url);
             
-            $response->headers->setCookie(new Cookie('succes_connexion', 'coincoin', time() - 3600));
+            $response->headers->setCookie(new Cookie('success_connection', '', time() - 3600));
             
             return $response;
 	}	
