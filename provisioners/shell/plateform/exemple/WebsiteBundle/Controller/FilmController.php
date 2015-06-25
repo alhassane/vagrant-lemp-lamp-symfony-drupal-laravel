@@ -85,7 +85,7 @@ class FilmController extends ContainerAware
            $message = $formHandler->getMessage();
         }
         // Get the form
-        if ($request->getMethod() == 'POST' && !$form->isValid()) {
+        if ($request->getMethod() == 'POST') {
             $form = $formHandler->getForm();
         } else {
             $form = $this->container->get('form.factory')->create('dirisi_website_film', $film);            
