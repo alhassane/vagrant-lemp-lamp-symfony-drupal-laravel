@@ -26,11 +26,11 @@ abstract class AbstractFormHandler implements FormHandlerInterface
      */      
     protected $obj;    
 
-    public function __construct(FormInterface $form, Request $request, $processHandler = null)
+    public function __construct(FormInterface $form, Request $request, $processManager = null)
     {
         $this->form = $form;
         $this->request = $request;
-        $this->processHandler = $processHandler;
+        $this->processManager = $processManager;
     }
 
     /**
@@ -83,7 +83,7 @@ abstract class AbstractFormHandler implements FormHandlerInterface
     /**
      * Set object
      *
-     * @param string $obj
+     * @param object $obj
      */
     public function setObject($obj)
     {

@@ -14,13 +14,18 @@ class FilmType extends AbstractType
         $builder->add('titre', 'text', array('label' => 'film.titre'))
                 ->add('description', 'textarea', array('label' => 'film.description'));
         
-        $builder->add('categorie','entity', array(
-            'class' => 'Dirisi\WebsiteBundle\Entity\Categorie',
-            'property' => 'nom',
-            'multiple' => false,
-            'required' => false,
-            'label' => 'film.categorie'
-            ));        
+        if (!empty($options)) {
+            print_r(intval($options['category_hidden']));
+            if (!$options['category_hidden']) {
+                $builder->add('categorie','entity', array(
+                    'class' => 'Dirisi\WebsiteBundle\Entity\Categorie',
+                    'property' => 'nom',
+                    'multiple' => false,
+                    'required' => false,
+                    'label' => 'film.categorie'
+                )); 
+            }
+        }
 
         $builder->add('acteurs', 'entity', array(
             'class' => 'Dirisi\WebsiteBundle\Entity\Acteur',
@@ -40,6 +45,7 @@ class FilmType extends AbstractType
     {
         $resolver->setDefaults(array(
                 'data_class' => 'Dirisi\WebsiteBundle\Entity\Film',
+                'category_hidden' => true,
         ));
     }       
 }

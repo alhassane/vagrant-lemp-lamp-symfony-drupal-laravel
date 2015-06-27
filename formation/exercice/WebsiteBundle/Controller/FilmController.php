@@ -77,21 +77,18 @@ class FilmController extends ContainerAware
         
         // Get the Handler
         $formHandler = $this->container->get('dirisi.website.film.form.handler');
-        // Get the request
-        $request = $this->container->get('request');
         // set process
-        $process = $formHandler->setObject($film)->process();
-        if ($process) {
+        if ($formHandler->setObject($film)->process()) {
            $message = $formHandler->getMessage();
         }
         // Get the form
-        if ($request->getMethod() == 'POST') {
-            $form = $formHandler->getForm();
-        } else {
-            $form = $this->container->get('form.factory')->create('dirisi_website_film', $film);            
+        $form = $formHandler->getForm();
+        if ($this->container->get('request')->getMethod() != 'POST') {
+            $form->setData($film);
         }
         
-        
+//        // Get the request
+//        $request = $this->container->get('request');        
 //        $form = $this->container->get('form.factory')->create(new FilmForm(), $film);
 //
 //        $request = $this->container->get('request');
@@ -123,7 +120,7 @@ class FilmController extends ContainerAware
             'form' => $form->createView(),
             'message' => $message,
             'film' => $film,
-            'hasError' => $request->getMethod() == 'POST' && !$form->isValid()
+            'hasError' => $this->container->get('request')->getMethod() == 'POST' && !$form->isValid()
             )
         );
     }

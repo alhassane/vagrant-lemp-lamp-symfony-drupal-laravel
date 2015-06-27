@@ -1,0 +1,117 @@
+security:
+    encoders:
+        Dirisi\AuthBundle\Entity\User: sha512
+        Symfony\Component\Security\Core\User\User: plaintext
+
+    role_hierarchy:
+        ROLE_ADMIN:       ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+    providers:
+
+        fos_userbundle:
+            id: fos_user.user_provider.username
+        in_memory:
+            memory:
+                users:
+                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
+                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+
+    firewalls:
+
+        # defaut login area for standard users   
+        main:
+            pattern: ^/dirisi
+            form_login:
+                provider: fos_userbundle
+                use_forward: false
+                csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
+                login_path: /dirisi/login
+                check_path: /dirisi/login_check
+                failure_path: null #/dirisi/login           
+                success_handler: security_authentication_success_handler
+                failure_handler: security_authentication_failure_handler
+                remember_me: false
+                always_use_default_target_path: true
+                default_target_path: /dirisi
+#            remember_me:
+#                key: "%secret%"
+#                lifetime: 3600
+#                path:     /
+#                domain:   ~ # Prend la valeur par défaut du domaine courant depuis $_SERVER
+#                remember_me_parameter: _remember_me
+            logout:
+                path: /dirisi/logout
+                target: /dirisi
+                handlers: [security_logout_success_handler]
+                invalidate_session: false
+                #delete_cookies: [sfynx_auth_user]
+            anonymous: true
+        dev:
+            pattern:  ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        login:
+            pattern:  ^/demo/secured/login$
+            security: false
+
+        secured_area:
+            pattern:    ^/demo/secured/
+            form_login:
+                check_path: _security_check
+                login_path: _demo_login
+            logout:
+                path:   _demo_logout
+                target: _demo
+            #anonymous: ~
+            #http_basic:
+            #    realm: "Secured Demo Area"
+
+    access_control:
+
+            # Liste des pages accessibles à tous les utilisateurs (ne pas toucher)
+            - { path: ^/_wdt/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/_profiler/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/js/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/css/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/dirisi/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/dirisi/login_check$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/dirisi/register$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            - { path: ^/dirisi/resseting$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+            # PAGES ACCESSIBLES AUX ADMINISTRATEURS
+            - { path: ^/dirisi/admin/, role: ROLE_ADMIN }
+            # PAGES ACCESSIBLES AUX UTILISATEURS CONNECTES
+            - { path: ^/dirisi/change-password, role: ROLE_USER }
+            # PAGES ACCESSIBLES À TOUS
+            - { path: ^/dirisi.*, role: IS_AUTHENTICATED_ANONYMOUSLY }
+
+        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+
+# jms_security_extra Configuration
+# http://jmsyst.com/bundles/JMSSecurityExtraBundle/master/configuration
+jms_security_extra:
+    # Whether you want to secure all services (true), or only secure specific
+    # services (false); see also below
+    secure_all_services: false # important for optimal perform
+    
+    # Enables expression language
+    expressions: true
+    
+    # Allows you to specify access control rules for specific methods, such
+    # as controller actions
+    method_access_control: { }
+    
+# jms_di_extra Configuration
+# http://jmsyst.com/bundles/JMSDiExtraBundle/master/configuration
+jms_di_extra:
+    locations:
+        all_bundles: true
+        directories: ["%kernel.root_dir%/../src"] # important for optimal perform
+    automatic_controller_injections:
+        properties:
+            request: "@request"
+            router: "@router"
+        method_calls:
+            setRouter: ["@router"] 
+
+            

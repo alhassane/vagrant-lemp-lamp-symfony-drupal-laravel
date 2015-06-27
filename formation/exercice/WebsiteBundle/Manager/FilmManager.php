@@ -1,11 +1,11 @@
 <?php
-namespace Dirisi\WebsiteBundle\Handler;
+namespace Dirisi\WebsiteBundle\Manager;
 
 use Dirisi\WebsiteBundle\Entity\Film;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class FilmHandlerProcess
+class FilmManager
 {
     /**
      * @var ContainerInterface
@@ -36,7 +36,7 @@ class FilmHandlerProcess
         $this->container = $container;  
     }
 
-    public function save(Film $entity, $data, $type = 'default') 
+    public function saveFormProcess(Film $entity, $data, $type = 'default') 
     {       
         $id = $entity->getId();
         if (isset($id) && !empty($id)) {
@@ -47,6 +47,16 @@ class FilmHandlerProcess
                 $entity->setActeurs($data->getActeurs());
             }
             
+////both arrays will be merged including duplicates
+//$result = array_merge( $array1, $array2 );
+////duplicate objects will be removed
+//$result = array_map("unserialize", array_unique(array_map("serialize", $result)));
+////array is sorted on the bases of id
+//sort( $result );
+//
+//
+//array_map('unserialize', array_intersect(array_map('serialize', $obj1), array_map('serialize', $obj2)) );            
+            
             $message = $this->container->get('translator')->trans('film.modifier.succes',array(
                         '%titre%' => $entity->getTitre()
                         ));
@@ -55,11 +65,8 @@ class FilmHandlerProcess
                         '%titre%' => $data->getTitre()
                         ));
             $entity = $data;
-        }
-        
-        // we create/modify entity
-        $this->em->persist($entity);
-        $this->em->flush();
+        }        
+        $this->em->getRepository('DirisiWebsiteBundle:Film')->save($entity);
             
         return $message;
     }

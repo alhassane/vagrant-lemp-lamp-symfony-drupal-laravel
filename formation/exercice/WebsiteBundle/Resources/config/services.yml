@@ -2,8 +2,26 @@ parameters:
     dirisi.handler.exception.class: Dirisi\WebsiteBundle\EventListener\HandlerException
     dirisi.handler.localeHandler.class: Dirisi\WebsiteBundle\EventListener\HandlerLocale
     dirisi.event_subscriber.acteur.class: Dirisi\WebsiteBundle\EventSubscriber\EventSubscriberActeurBundle
+    dirisi.twig.extension.tool.class: Dirisi\WebsiteBundle\Twig\Extension\PiToolExtension
 
 services:       
+    #
+    # configuration of the twig extensions
+    #               
+    twig.extension.tool:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
+           
+    #
+    # configuration of the sfynx extensions
+    #         
+    dirisi.tool.twig.extension.tool:
+        class: %dirisi.twig.extension.tool.class%
+        arguments: ['@service_container']
+        tags:
+            - { name: twig.extension }           
+           
     #               
     # handlers Configuration
     #           
