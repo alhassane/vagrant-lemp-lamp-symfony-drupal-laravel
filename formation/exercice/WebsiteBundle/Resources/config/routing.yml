@@ -1,0 +1,38 @@
+dirisi_accueil:
+  pattern: /
+  defaults: { _controller: DirisiWebsiteBundle:Default:index }
+dirisi_acteur_lister:
+  pattern: /acteur/
+  defaults: { _controller: DirisiWebsiteBundle:Acteur:lister }
+dirisi_acteur_ajouter:
+  pattern: /admin/acteur/ajouter
+  defaults: { _controller: DirisiWebsiteBundle:Acteur:editer }
+dirisi_acteur_modifier:
+  pattern: /admin/acteur/modifier/{id}
+  defaults: { _controller: DirisiWebsiteBundle:Acteur:editer }
+dirisi_acteur_supprimer:
+  pattern: /admin/acteur/supprimer/{id}
+  defaults: { _controller: DirisiWebsiteBundle:Acteur:supprimer }
+dirisi_acteur_rechercher:
+  pattern: /acteur/rechercher
+  defaults: { _controller: DirisiWebsiteBundle:Acteur:rechercher }
+  requirements:
+    _method: POST
+dirisi_film_lister:
+  pattern: /film/
+  defaults: { _controller: DirisiWebsiteBundle:Film:lister }
+dirisi_film_ajouter:
+  pattern: /admin/film/ajouter
+  defaults: { _controller: DirisiWebsiteBundle:Film:editer }
+dirisi_film_modifier:
+  pattern: /admin/film/modifier/{id}
+  defaults: { _controller: DirisiWebsiteBundle:Film:editer }
+dirisi_film_supprimer:
+  pattern: /admin/film/supprimer/{id}
+  defaults: { _controller: DirisiWebsiteBundle:Film:supprimer }
+dirisi_film_voir:
+  pattern: /film/voir/{id}
+  defaults: { _controller: DirisiWebsiteBundle:Film:voir }
+dirisi_choisir_langue:
+  pattern: /choisir-langue/{langue}
+  defaults: { _controller: DirisiWebsiteBundle:Default:choisirLangue } 
