@@ -1,0 +1,9 @@
+//both arrays will be merged including duplicates
+$result = array_merge( $array1, $array2 );
+//duplicate objects will be removed
+$result = array_map("unserialize", array_unique(array_map("serialize", $result)));
+//array is sorted on the bases of id
+sort( $result );
+
+
+array_map('unserialize', array_intersect(array_map('serialize', $obj1), array_map('serialize', $obj2)) );
