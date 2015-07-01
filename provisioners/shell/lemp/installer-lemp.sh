@@ -1,6 +1,5 @@
 #!/bin/bash
 DIR=$1
-PLATEFORM_PROJET_NAME=$2
 source $DIR/provisioners/shell/env.sh
 
 echo "*** NGINX ***"

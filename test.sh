@@ -1,11 +1,9 @@
-#!/bin/sh
+#!/bin/bash
+DIR=$1
+DISTRIB=$2
+INSTALL_USERWWW=$3
+source $DIR/provisioners/shell/env.sh
 
-# export INSTALL_USERNAME=$(ps -o user= -p $$ | awk '{print $1}')
-export INSTALL_USERNAME="vagrant"
-export INSTALL_USERGROUP="www-data"
-export INSTALL_USERHOME="/home/vagrant"
-
-#
 declare -A plateforms
 i=1
 
@@ -75,3 +73,47 @@ declare -A plateform4=(
 for key in "${!plateform4[@]}"; do
   plateforms[$i,$key]=${plateform4[$key]}
 done
+
+# we concatenate all applications
+declare -p plateforms
+
+# print value
+matrix=(
+    "PLATEFORM_INSTALL_NAME"
+    "PLATEFORM_INSTALL_TYPE"
+    "PLATEFORM_INSTALL_VERSION"
+    "PLATEFORM_PROJET_NAME"
+    "PLATEFORM_PROJET_GIT"
+    "DOMAINE"
+    "MYAPP_BUNDLE_NAME"
+    "MYAPP_PREFIX"
+    "FOSUSER_PREFIX"
+)
+for m in "${!matrix[@]}"
+do
+    echo "key: " $m "  value: ${matrix[$m]}"
+done
+num_rows=$i
+num_columns=9
+f1="%$((${#num_rows}+1))s"
+f2=" %9s"
+
+printf "$f1" ''
+for ((i=1;i<=num_rows;i++)) do
+    printf "$f2" plf$i
+done
+echo
+
+for ((j=1;j<=num_columns;j++)) do
+    printf "$f1" $j
+    for ((i=1;i<=num_rows;i++)) do
+        #printf "$f2" ${matrix[$j - 1]}
+        printf "$f2" ${plateforms[$i,${matrix[$j - 1]}]}
+
+    done
+    echo
+done
+
+
+
+

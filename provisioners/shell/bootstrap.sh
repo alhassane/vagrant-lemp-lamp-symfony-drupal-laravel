@@ -1,32 +1,8 @@
 #!/bin/bash
 DIR=$1
 DISTRIB=$2
-PLATEFORM_INSTALL_NAME=$3
-PLATEFORM_INSTALL_TYPE=$4
-PLATEFORM_INSTALL_VERSION=$5
-PLATEFORM_PROJET_NAME=$6
-PLATEFORM_PROJET_GIT=$7
-PLATEFORME_USERNAME_GIT=$8
-INSTALL_USERWWW=$9
-
-#
-is_pc=$9
-is_lemp=${10}
-is_plateform=${11}
-is_phpqatools=${12}
-is_jackrabbit=${13}
-is_solr=${14}
-is_mongodb=${15}
-is_elasticsearch=${16}
-is_jenkins=${17}
-is_gitlab=${18}
-is_swap=${19}
-
+INSTALL_USERWWW=$3
 source $DIR/provisioners/shell/env.sh
-
-PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
-PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
-DATABASE_NAME="symfony_${PLATEFORM_PROJET_NAME_LOWER}"
 
 echo "Removing Windows newlines on Linux (sed vs. awk)"
 #find $DIR/provisioners/* -type f -exec dos2unix {} \;
@@ -61,7 +37,7 @@ $DIR/provisioners/shell/SWAP/installer-swap.sh "$DIR" # important to allow the c
 $DIR/provisioners/shell/pc/installer-pc.sh "$DIR" "$DISTRIB"
 
 echo "***** Provisionning LEMP *****"
-$DIR/provisioners/shell/lemp/installer-lemp.sh "$DIR" "$PLATEFORM_PROJET_NAME"
+$DIR/provisioners/shell/lemp/installer-lemp.sh "$DIR"
 
 echo "**** we install/update the composer file ****"
 #wget https://getcomposer.org/composer.phar -O ./composer.phar
@@ -86,23 +62,8 @@ then
     $DIR/provisioners/shell/xhprof/installer-xhprof-$DISTRIB.sh
 fi
 
-echo "**** we install plateform ****"
-$DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$PLATEFORM_INSTALL_NAME" "$PLATEFORM_INSTALL_TYPE" "$PLATEFORM_INSTALL_VERSION" "$PLATEFORM_PROJET_NAME" "$PLATEFORM_PROJET_GIT" "$INSTALL_USERWWW"
-
-echo "we install the mysql dump files if the DUMP/mysqldump.sql file exist"
-if [ -f $DIR/DUMP/mysqldump.sql ]; then
-    sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump.sql" "$DATABASE_NAME"
-fi
-
-echo "we install all uploads files if the DUMP/uploads.tar.gz file exist"
-if [ -f $DIR/DUMP/uploads.sql ]; then
-    sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads.tar.gz" "$DIR" "$INSTALL_USERWWW" "$PLATEFORM_PROJET_NAME"
-fi
-
-echo "we install the jackribbit database if the DUMP/jr.tar.gz file exist"
-if [ -f $DIR/DUMP/jr.sql ]; then
-    sudo $DIR/provisioners/shell/plateform/importJR.sh "$DIR/DUMP/jr.tar.gz"
-fi
+echo "**** we install plateforms ****"
+$DIR/provisioners/shell/plateform/installer-all-plateforms.sh "$DIR" "$DISTRIB" "$INSTALL_USERWWW"
 
 echo "***** End we clean-up the system *****"
 sudo apt-get -y autoremove > /dev/null
