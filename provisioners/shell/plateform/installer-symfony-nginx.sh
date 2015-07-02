@@ -85,7 +85,7 @@ if ! grep -q "assets_version: v1_0_0" app/config/config.yml; then
 fi
 
 echo "****  we add in .gitignore file default values from symfony project ****"
-if ! grep -q "Symfony3" .gitignore; then
+if ! grep -q "www.gitignore.io" .gitignore; then
     curl -L -s https://www.gitignore.io/api/symfony >> .gitignore
 fi
 

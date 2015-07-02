@@ -25,7 +25,7 @@ if [ ! -d $INSTALL_USERWWW ]; then
 fi
 cd $INSTALL_USERWWW
 
-# we create project
+echo "**** we download artifact project ****"
 if [ ! -d $PLATEFORM_PROJET_NAME ]; then
     git clone $PLATEFORM_PROJET_GIT $PLATEFORM_PROJET_NAME
     #mkdir -p $PLATEFORM_PROJET_NAME
