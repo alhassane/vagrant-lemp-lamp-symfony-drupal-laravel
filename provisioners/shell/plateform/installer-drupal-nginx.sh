@@ -208,3 +208,24 @@ fi
 
 echo "**** we restart nginx server ****"
 sudo service nginx restart
+
+echo "**** we delete bin-dir config to have the default value egal to 'vendor/bin' ****"
+if [ -f "composer.json" ]; then
+     sed -i '/bin-dir/d' composer.json
+     rm composer.lock
+fi
+
+if [ ! -f composer.phar ]; then
+    echo "**** we install/update the composer file ****"
+    wget https://getcomposer.org/composer.phar -O ./composer.phar
+    #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+else
+    echo "update composer.phar"
+    php composer.phar self-update    
+fi
+
+echo "**** we lauch the composer ****"
+sudo composer self-update
+composer install --no-interaction
+echo "**** Generating optimized autoload files ****"
+composer dump-autoload --optimize 
