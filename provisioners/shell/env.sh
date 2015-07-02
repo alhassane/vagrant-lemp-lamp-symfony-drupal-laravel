@@ -77,3 +77,55 @@ declare -A plateform4=(
 for key in "${!plateform4[@]}"; do
   plateforms[$i,$key]=${plateform4[$key]}
 done
+
+# we declare the fourth appplication
+declare -A plateform5=(
+    ["PLATEFORM_INSTALL_NAME"]="drupal-nginx"
+    ["PLATEFORM_INSTALL_TYPE"]="composer"
+    ["PLATEFORM_INSTALL_VERSION"]="7.x"
+    ["PLATEFORM_PROJET_NAME"]="drupal7"
+    ["PLATEFORM_PROJET_GIT"]=""
+    ["DOMAINE"]=""
+    ["MYAPP_BUNDLE_NAME"]=""
+    ["MYAPP_PREFIX"]=""
+    ["FOSUSER_PREFIX"]=""
+)
+((i++))
+for key in "${!plateform4[@]}"; do
+  plateforms[$i,$key]=${plateform5[$key]}
+done
+
+# we declare the fourth appplication
+declare -A plateform6=(
+    ["PLATEFORM_INSTALL_NAME"]="drupal-nginx"
+    ["PLATEFORM_INSTALL_TYPE"]="composer"
+    ["PLATEFORM_INSTALL_VERSION"]="8.x"
+    ["PLATEFORM_PROJET_NAME"]="drupal8"
+    ["PLATEFORM_PROJET_GIT"]=""
+    ["DOMAINE"]=""
+    ["MYAPP_BUNDLE_NAME"]=""
+    ["MYAPP_PREFIX"]=""
+    ["FOSUSER_PREFIX"]=""
+)
+((i++))
+for key in "${!plateform4[@]}"; do
+  plateforms[$i,$key]=${plateform6[$key]}
+done
+
+# we declare the fourth appplication
+declare -A plateform7=(
+    ["PLATEFORM_INSTALL_NAME"]="laravel-nginx"
+    ["PLATEFORM_INSTALL_TYPE"]="composer"
+    ["PLATEFORM_INSTALL_VERSION"]="v5.0.22"
+    ["PLATEFORM_PROJET_NAME"]="laravel5"
+    ["PLATEFORM_PROJET_GIT"]=""
+    ["DOMAINE"]=""
+    ["MYAPP_BUNDLE_NAME"]=""
+    ["MYAPP_PREFIX"]=""
+    ["FOSUSER_PREFIX"]=""
+)
+((i++))
+for key in "${!plateform4[@]}"; do
+  plateforms[$i,$key]=${plateform7[$key]}
+done
+

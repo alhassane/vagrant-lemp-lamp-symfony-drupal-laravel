@@ -27,9 +27,6 @@ cd $INSTALL_USERWWW
 
 echo "we download all files of the $PLATEFORM_INSTALL_VERSION plateform"
 if [ ! -d $PLATEFORM_PROJET_NAME ]; then
-    #composer create-project drupal-composer/drupal-project:8.x-dev drupal8 --stability dev --no-interaction
-    #git clone -b 8.x --single-branch git://github.com/drupal-composer/drupal-project.git drupal8
-    #git clone -b 7.x --single-branch git://github.com/drupal-composer/drupal-project.git drupal7
     git clone -b $PLATEFORM_INSTALL_VERSION --single-branch $PLATEFORM_PROJET_GIT $PLATEFORM_PROJET_NAME
     #mkdir -p $PLATEFORM_PROJET_NAME
 fi
