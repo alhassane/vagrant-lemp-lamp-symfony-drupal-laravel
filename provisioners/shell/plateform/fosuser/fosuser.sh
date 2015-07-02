@@ -103,10 +103,18 @@ if ! grep -q "plainPassword" src/${DOMAINE}/AuthBundle/Form/UserType.php; then
 fi
 
 echo "** we add encoder in security.yml **"
+if ! grep -q "encoders:" app/config/security.yml; then
+    sed -i '/security:/a \\    encoders:' app/config/security.yml
+fi
 if ! grep -q "sha512" app/config/security.yml; then
     #sed -i 's/Symfony\\Component\\Security\\Core\\User\\User: plaintext/'$DOMAINE'\\AuthBundle\\Entity\\User: sha512/g' app/config/security.yml
-    sed -i '/encoders/a \\        '$DOMAINE'\\AuthBundle\\Entity\\User: sha512' app/config/security.yml
+    sed -i '/encoders:/a \\        '$DOMAINE'\\AuthBundle\\Entity\\User: sha512' app/config/security.yml
     # Symfony\Component\Security\Core\User\User: plaintext
+fi
+if ! grep -q "role_hierarchy" app/config/security.yml; then
+    sed -i '/security:/a \\    role_hierarchy:' app/config/security.yml
+    sed -i '/role_hierarchy:/a \\        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]' app/config/security.yml
+    sed -i '/role_hierarchy:/a \\        ROLE_ADMIN:       ROLE_USER' app/config/security.yml
 fi
 if ! grep -q "${MYAPP_PREFIX}/resseting" app/config/security.yml; then
     sed -i "/[^_]access_control:/r $DIR/provisioners/shell/plateform/fosuser/addAccessControlSecurity.yml" app/config/security.yml
@@ -131,6 +139,12 @@ php app/console fos:user:promote user ROLE_USER
 
 php app/console fos:user:create superadmin superadmin@gmail.com pacman
 php app/console fos:user:promote --super superadmin
+
+php app/console fos:user:create user user@gmail.com pacman --env=test
+php app/console fos:user:promote user ROLE_USER --env=test
+
+php app/console fos:user:create superadmin superadmin@gmail.com pacman --env=test
+php app/console fos:user:promote --super superadmin --env=test
 
 #echo "** we add JMS Security configuration **"
 # since sf 2.4

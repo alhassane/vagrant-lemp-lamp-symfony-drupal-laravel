@@ -9,7 +9,7 @@
                 login_path: /myapp/login
                 check_path: /myapp/login_check
                 failure_path: null #/myapp/login #/login_failure                
-                success_handler: security_authentication_success_handler
+                #success_handler: security_authentication_success_handler
                 #failure_handler: security_authentication_failure_handler
                 remember_me: false
                 always_use_default_target_path: true
@@ -23,7 +23,7 @@
             logout:
                 path: /myapp/logout
                 target: /myapp
-                handlers: [security_logout_success_handler]
+                #handlers: [security_logout_success_handler]
                 invalidate_session: false
                 #delete_cookies: [sfynx_auth_user]
             anonymous: true

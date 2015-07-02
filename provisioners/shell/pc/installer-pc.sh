@@ -90,7 +90,7 @@ sudo npm install -g bower
 sudo npm install -g generator-angular
 
 echo "Install keyborad fr"
-if [ "$DISTRIB" == *"ubuntu"* ]
+if [ "$DISTRIB" == *"ubuntu"* ]; then
 sudo loadkeys fr
 sudo cat <<EOT >/etc/default/keyboard
 # KEYBOARD CONFIGURATION FILE
@@ -101,7 +101,7 @@ XKBVARIANT=""
 XKBOPTIONS=""
 EOT
 fi
-if [ "$DISTRIB" == *"debian"* ]
+if [ "$DISTRIB" == *"debian"* ]; then
 sudo cat <<EOT >/etc/default/keyboard
 # KEYBOARD CONFIGURATION FILE
 # Consult the keyboard(5) manual page.

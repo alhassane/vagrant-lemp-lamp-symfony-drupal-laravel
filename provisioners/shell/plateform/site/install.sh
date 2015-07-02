@@ -19,7 +19,6 @@ fi
 echo "** we modify artifatcs **"
 cp -R $DIR/provisioners/shell/plateform/site/exo1/* src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyApp\\\SiteBundle/${DOMAINE}\\\\${MYAPP_BUNDLE_NAME}Bundle/g" {} \;
-#find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/DirisiWebsiteBundle/MyApp\\\SiteBundle/g" {} \;
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/MyAppSite/${DOMAINE}${MYAPP_BUNDLE_NAME}/g" {} \;
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/myappsite/${DOMAINE_LOWER}${MYAPP_BUNDLE_NAME_LOWER}/g" {} \;
 find src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/* -type f -exec sed -i  "s/myapp/${DOMAINE_LOWER}/g" {} \;
@@ -29,7 +28,7 @@ mv src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/MyAppSiteExtens
 sed -i "s/XmlFileLoader/YamlFileLoader/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
 sed -i "s/services.xml/services.yml/g" src/${DOMAINE}/${MYAPP_BUNDLE_NAME}Bundle/DependencyInjection/${DOMAINE}${MYAPP_BUNDLE_NAME}Extension.php
 
-echo "** we add FOSUser routing **"
+echo "** we add routing **"
 if ! grep -q "${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/Resources/config/routing.yml" app/config/routing.yml; then
     echo "$(cat $DIR/provisioners/shell/plateform/site/addRoutingExo1.yml)" >> app/config/routing.yml
     sed -i "s/MyAppSiteBundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/g" app/config/routing.yml

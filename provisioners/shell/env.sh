@@ -8,7 +8,7 @@ export SERVER="lemp" # lemp|lamp
 
 #
 declare -A plateforms
-i=1
+i=0
 
 # we declare the first appplication
 declare -A plateform1=(
@@ -22,6 +22,7 @@ declare -A plateform1=(
     ["MYAPP_PREFIX"]=""
     ["FOSUSER_PREFIX"]=""
 )
+((i++))
 for key in "${!plateform1[@]}"; do
   plateforms[$i,$key]=${plateform1[$key]}
 done
@@ -50,7 +51,7 @@ declare -A plateform3=(
     ["PLATEFORM_INSTALL_VERSION"]="2.4.0"
     ["PLATEFORM_PROJET_NAME"]="symfony24"
     ["PLATEFORM_PROJET_GIT"]=""
-    ["DOMAINE"]="Dirisi"
+    ["DOMAINE"]="Project"
     ["MYAPP_BUNDLE_NAME"]="Website"
     ["MYAPP_PREFIX"]="dirisi"
     ["FOSUSER_PREFIX"]="$MYAPP_PREFIX/admin"
@@ -67,7 +68,7 @@ declare -A plateform4=(
     ["PLATEFORM_INSTALL_VERSION"]="2.7.0"
     ["PLATEFORM_PROJET_NAME"]="symfony27"
     ["PLATEFORM_PROJET_GIT"]=""
-    ["DOMAINE"]="Dirisi"
+    ["DOMAINE"]="Project"
     ["MYAPP_BUNDLE_NAME"]="Website"
     ["MYAPP_PREFIX"]="dirisi"
     ["FOSUSER_PREFIX"]="$MYAPP_PREFIX/admin"

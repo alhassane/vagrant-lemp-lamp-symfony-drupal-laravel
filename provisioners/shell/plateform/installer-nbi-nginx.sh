@@ -16,7 +16,7 @@ source $DIR/provisioners/shell/plateform/var.sh
 
 #if var is empty
 if [ -z "$PLATEFORM_PROJET_GIT" ]; then
-    $PLATEFORM_PROJET_GIT="https://github.com/RappFrance/rapp_nosbelidees"
+    PLATEFORM_PROJET_GIT="https://github.com/RappFrance/rapp_nosbelidees"
 fi
 
 # we create directories
