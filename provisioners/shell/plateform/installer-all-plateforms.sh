@@ -61,18 +61,18 @@ do
     echo "**** we install plateform ****"
     $DIR/provisioners/shell/plateform/installer-$PLATEFORM_INSTALL_NAME.sh "$DIR" "$DISTRIB" "$INSTALL_USERWWW" "$PLATEFORM_INSTALL_NAME" "$PLATEFORM_INSTALL_TYPE" "$PLATEFORM_INSTALL_VERSION" "$PLATEFORM_PROJET_NAME" "$PLATEFORM_PROJET_GIT" "$DOMAINE" "$MYAPP_BUNDLE_NAME" "$MYAPP_PREFIX" "$FOSUSER_PREFIX"
 
-    echo "we install the mysql dump files if the DUMP/mysqldump.sql file exist"
-    if [ -f $DIR/DUMP/mysqldump.sql ]; then
-        sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump.sql" "$DATABASE_NAME"
+    echo "we install the mysql dump files if the $DIR/DUMP/mysqldump_$DATABASE_NAME.sql file exist"
+    if [ -f "$DIR/DUMP/mysqldump_$DATABASE_NAME.sql" ]; then
+        sudo $DIR/provisioners/shell/plateform/importBDD.sh "$DIR/DUMP/mysqldump_$DATABASE_NAME.sql" "$DATABASE_NAME"
     fi
 
-    echo "we install all uploads files if the DUMP/uploads.tar.gz file exist"
-    if [ -f $DIR/DUMP/uploads.sql ]; then
-        sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads.tar.gz" "$DIR" "$INSTALL_USERWWW" "$PLATEFORM_PROJET_NAME"
+    echo "we install all uploads files if the $DIR/DUMP/uploads_$DATABASE_NAME.tar.gz file exist"
+    if [ -f "$DIR/DUMP/uploads_$DATABASE_NAME.sql" ]; then
+        sudo $DIR/provisioners/shell/plateform/importUpload.sh "$DIR/DUMP/uploads_$DATABASE_NAME.tar.gz" "$DIR" "$INSTALL_USERWWW" "$PLATEFORM_PROJET_NAME"
     fi
 
-    echo "we install the jackribbit database if the DUMP/jr.tar.gz file exist"
-    if [ -f $DIR/DUMP/jr.sql ]; then
-        sudo $DIR/provisioners/shell/plateform/importJR.sh "$DIR/DUMP/jr.tar.gz"
+    echo "we install the jackribbit database if the $DIR/DUMP/jr_$DATABASE_NAME.tar.gz file exist"
+    if [ -f "$DIR/DUMP/jr_$DATABASE_NAME.sql" ]; then
+        sudo $DIR/provisioners/shell/plateform/importJR.sh "$DIR/DUMP/jr_$DATABASE_NAME.tar.gz"
     fi 
 done

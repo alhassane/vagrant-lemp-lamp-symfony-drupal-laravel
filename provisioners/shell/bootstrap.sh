@@ -36,8 +36,8 @@ echo "***** Provisionning PC *****"
 $DIR/provisioners/shell/SWAP/installer-swap.sh "$DIR" # important to allow the composer to have enough memory
 $DIR/provisioners/shell/pc/installer-pc.sh "$DIR" "$DISTRIB"
 
-echo "***** Provisionning LEMP *****"
-$DIR/provisioners/shell/lemp/installer-lemp.sh "$DIR"
+echo "***** Provisionning SERVER HTTP *****"
+$DIR/provisioners/shell/serverhttp/installer-$SERVER.sh "$DIR"
 
 echo "**** we install/update the composer file ****"
 #wget https://getcomposer.org/composer.phar -O ./composer.phar
