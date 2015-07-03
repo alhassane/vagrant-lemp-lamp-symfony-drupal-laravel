@@ -63,7 +63,10 @@ then
 fi
 
 echo "*** install sonar ***"
-/vagrant/provisioners/shell/sonar/installer-sonar.sh "$DISTRIB"
+if [ -f $DIR/provisioners/shell/sonar/installer-sonar.sh ];
+then
+    /$DIR/provisioners/shell/sonar/installer-sonar.sh "$DISTRIB"
+fi
 
 echo "**** we install plateforms ****"
 $DIR/provisioners/shell/plateform/installer-all-plateforms.sh "$DIR" "$DISTRIB" "$INSTALL_USERWWW"
