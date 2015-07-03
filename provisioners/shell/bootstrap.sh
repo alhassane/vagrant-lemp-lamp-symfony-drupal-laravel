@@ -62,6 +62,9 @@ then
     $DIR/provisioners/shell/xhprof/installer-xhprof-$DISTRIB.sh
 fi
 
+echo "*** install sonar ***"
+/vagrant/provisioners/shell/sonar/installer-sonar.sh "$DISTRIB"
+
 echo "**** we install plateforms ****"
 $DIR/provisioners/shell/plateform/installer-all-plateforms.sh "$DIR" "$DISTRIB" "$INSTALL_USERWWW"
 
