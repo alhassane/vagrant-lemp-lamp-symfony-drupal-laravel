@@ -62,12 +62,6 @@ then
     $DIR/provisioners/shell/xhprof/installer-xhprof-$DISTRIB.sh
 fi
 
-echo "*** install sonar ***"
-if [ -f $DIR/provisioners/shell/sonar/installer-sonar.sh ];
-then
-    /$DIR/provisioners/shell/sonar/installer-sonar.sh "$DISTRIB"
-fi
-
 echo "**** we install plateforms ****"
 $DIR/provisioners/shell/plateform/installer-all-plateforms.sh "$DIR" "$DISTRIB" "$INSTALL_USERWWW"
 
