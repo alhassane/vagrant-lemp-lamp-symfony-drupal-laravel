@@ -7,7 +7,7 @@ echo "*** PHP ***"
 
 #
 echo "Updating PHP repository"
-add-apt-repository ppa:ondrej/php5 -y > /dev/null
+sudo add-apt-repository ppa:ondrej/php5 -y > /dev/null
 sudo apt-get -y update > /dev/null
 sudo apt-get -y dist-upgrade > /dev/null
 

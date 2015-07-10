@@ -43,6 +43,11 @@ if ! grep -q "switch_language_authorized" app/config/parameters.yml; then
     echo "    all_locales: ['fr', 'en']" >> app/config/parameters.yml.dist
 fi
 
+echo "**** we create phpunit.xml ****"
+if [ ! -f app/phpunit.xml ]; then
+    cp app/phpunit.xml.dist app/phpunit.xml
+fi
+
 echo "** we create datatable in database **"
 rm -rf app/cache/*
 php app/console doctrine:schema:create --env=dev --process-isolation  -v

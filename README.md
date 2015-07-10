@@ -1,4 +1,3 @@
-# vagrant-symfony-nginx
-vagrant LEMP stack for developers with symfony and sfynx generator application
+# vagrant stack witch install LEMP or LAMP
 
-
+vagrant stack for developers with sfynx, symfony, drupal, laravel generator application
