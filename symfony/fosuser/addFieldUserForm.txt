@@ -1,7 +1,7 @@
             ->add('username')
             ->add('groups','entity', array(
                     'label' => 'pi.form.label.field.usergroup',
-                    'class' => 'AcmeAuthBundle:Group',
+                    'class' => 'MyAppAuthBundle:Group',
                     'query_builder' => function(EntityRepository $er) {
                             return $er->createQueryBuilder('k')
                             ->select('k')

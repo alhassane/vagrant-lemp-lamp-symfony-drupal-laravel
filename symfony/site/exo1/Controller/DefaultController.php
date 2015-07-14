@@ -19,7 +19,7 @@ class DefaultController extends ContainerAware
 {
     public function indexAction()
     {
-            $em = $this->container->get('doctrine')->getEntityManager();
+            $em = $this->container->get('doctrine')->getManager();
 
             $categories = $em->getRepository('MyAppSiteBundle:Categorie')->findAll();
 
@@ -54,7 +54,7 @@ class DefaultController extends ContainerAware
     }
     
     public function enregistrerDonnees() {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         // Categories
         $categorie1 = new Categorie();

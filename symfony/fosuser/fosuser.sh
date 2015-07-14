@@ -97,6 +97,7 @@ if ! grep -q "plainPassword" src/${DOMAINE}/AuthBundle/Form/UserType.php; then
     #sed -i '/groups/d' src/${DOMAINE}/AuthBundle/Form/UserType.php
     #sed -i "/->add('email')/r $DIR/fosuser/addFieldUserForm.txt" src/${DOMAINE}/AuthBundle/Form/UserType.php
     sed -e '/username/ {' -e "r $DIR/fosuser/addFieldUserForm.txt" -e 'd' -e '}' -i src/${DOMAINE}/AuthBundle/Form/UserType.php
+    sed -i "s/MyAppAuthBundle/${DOMAINE}AuthBundle/g" src/${DOMAINE}/AuthBundle/Form/UserType.php
 
     sed -i '/namespace/a \use Doctrine\\ORM\\EntityRepository;' src/${DOMAINE}/AuthBundle/Form/UserType.php
     sed -i '/namespace/a \use Symfony\\Component\\Validator\\Constraints;' src/${DOMAINE}/AuthBundle/Form/UserType.php
@@ -131,7 +132,7 @@ fi
 
 echo "** we add twig resource files **"
 cp -R $DIR/fosuser/Resources/views/* src/${DOMAINE}/AuthBundle/Resources/views
-sed -i "s/MyAppBundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/g" src/${DOMAINE}/AuthBundle/Resources/views/layout.html.twig
+sed -i "s/MyAppSiteBundle/${DOMAINE}${MYAPP_BUNDLE_NAME}Bundle/g" src/${DOMAINE}/AuthBundle/Resources/views/layout.html.twig
 
 echo "we create admin/pacman and superadmin/pacman user"
 php app/console fos:user:create user user@gmail.com pacman

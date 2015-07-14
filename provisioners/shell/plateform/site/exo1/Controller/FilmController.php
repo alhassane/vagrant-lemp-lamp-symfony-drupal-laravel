@@ -11,7 +11,7 @@ class FilmController extends ContainerAware
 {
     public function listerAction()
     {        
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $films = $em->getRepository('MyAppSiteBundle:Film')->findAll();
 
         return $this->container->get('templating')->renderResponse('MyAppSiteBundle:Film:lister.html.twig', array(
@@ -21,7 +21,7 @@ class FilmController extends ContainerAware
     
     public function topAction($max = 5)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         $qb = $em->createQueryBuilder();
         $qb->select('f')
@@ -39,7 +39,7 @@ class FilmController extends ContainerAware
 
     public function voirAction($id = null)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         if (isset($id)) 
         {
@@ -57,7 +57,7 @@ class FilmController extends ContainerAware
     public function editerAction($id = null)
     {
         $message='';
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         if (isset($id)) 
         {
@@ -112,7 +112,7 @@ class FilmController extends ContainerAware
 
     public function supprimerAction($id)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $film = $em->find('MyAppSiteBundle:Film', $id);
 
         if (!$film) 

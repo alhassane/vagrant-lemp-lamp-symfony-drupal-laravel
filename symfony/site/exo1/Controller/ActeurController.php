@@ -12,7 +12,7 @@ class ActeurController extends ContainerAware
 {
     public function listerAction()
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $acteurs= $em->getRepository('MyAppSiteBundle:Acteur')->findAll();
 
 		$form = $this->container->get('form.factory')->create(new ActeurRechercheForm());
@@ -25,7 +25,7 @@ class ActeurController extends ContainerAware
 
     public function topAction($max = 5)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         $qb = $em->createQueryBuilder();
         $qb->select('a')
@@ -50,7 +50,7 @@ class ActeurController extends ContainerAware
             $motcle = '';
             $motcle = $request->request->get('motcle');
 
-            $em = $this->container->get('doctrine')->getEntityManager();
+            $em = $this->container->get('doctrine')->getManager();
 
             if($motcle != '')
             {
@@ -81,7 +81,7 @@ class ActeurController extends ContainerAware
     public function editerAction($id = null)
     {
         $message='';
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
 
         if (isset($id)) 
         {
@@ -140,7 +140,7 @@ class ActeurController extends ContainerAware
 
     public function supprimerAction($id)
     {
-        $em = $this->container->get('doctrine')->getEntityManager();
+        $em = $this->container->get('doctrine')->getManager();
         $acteur = $em->find('MyAppSiteBundle:Acteur', $id);
 
         if (!$acteur) 
