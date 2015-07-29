@@ -20,8 +20,8 @@ composer update --with-dependencies
 echo "** we generate ${DOMAINE}AuthBundle with User and Group entities **"
 if [ ! -d src/${DOMAINE}/AuthBundle ]; then
     php app/console generate:bundle --namespace="${DOMAINE}/AuthBundle" --bundle-name="${DOMAINE}AuthBundle" --format=annotation --structure --dir=src --no-interaction
-    php app/console generate:doctrine:entity --no-interaction --entity="${DOMAINE}AuthBundle:User" --fields="groups:array name:string(50) nickname:string(50) birthday:datetime address:text zip_code:string(6) city:string(50) country:string(50) created_at:datetime updated_at_at:datetime archive_at:datetime" --format=annotation --with-repository --no-interaction
-    php app/console generate:doctrine:entity --no-interaction --entity="${DOMAINE}AuthBundle:Group" --fields="created_at:datetime updated_at_at:datetime archive_at:datetime enabled:boolean" --format=annotation --with-repository --no-interaction
+    php app/console generate:doctrine:entity --no-interaction --entity="${DOMAINE}AuthBundle:User" --fields="groups:array name:string(50) nickname:string(50) birthday:datetime address:text zip_code:string(6) city:string(50) country:string(50) created_at:datetime updated_at:datetime archive_at:datetime" --format=annotation --with-repository --no-interaction
+    php app/console generate:doctrine:entity --no-interaction --entity="${DOMAINE}AuthBundle:Group" --fields="created_at:datetime updated_at:datetime archive_at:datetime enabled:boolean" --format=annotation --with-repository --no-interaction
 
     sed -i '/@ORM\\Column/ s=)=, nullable\=true)=' src/${DOMAINE}/AuthBundle/Entity/User.php
     #sed -i '/@ORM\\Column/ s=, nullable\=true)=)=' src/${DOMAINE}/AuthBundle/Entity/User.php

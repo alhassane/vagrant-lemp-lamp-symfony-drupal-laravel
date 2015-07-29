@@ -53,7 +53,7 @@ declare -A plateform3=(
     ["PLATEFORM_PROJET_GIT"]=""
     ["DOMAINE"]="Project"
     ["MYAPP_BUNDLE_NAME"]="Website"
-    ["MYAPP_PREFIX"]="dirisi"
+    ["MYAPP_PREFIX"]="myapp"
     ["FOSUSER_PREFIX"]="$MYAPP_PREFIX/admin"
 )
 ((i++))
@@ -70,7 +70,7 @@ declare -A plateform4=(
     ["PLATEFORM_PROJET_GIT"]=""
     ["DOMAINE"]="Project"
     ["MYAPP_BUNDLE_NAME"]="Website"
-    ["MYAPP_PREFIX"]="dirisi"
+    ["MYAPP_PREFIX"]="myapp"
     ["FOSUSER_PREFIX"]="$MYAPP_PREFIX/admin"
 )
 ((i++))
