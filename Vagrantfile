@@ -21,9 +21,12 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Set Hostname
     config.vm.host_name = $vm_hostname
 
-    # Set the default project share
-    config.vm.synced_folder ".",  $vm_group, id: "vagrant-root", :nfs => true
-    config.vm.synced_folder "./", $vm_www_point, create: false, type: "nfs"
+    # Set the default project share for window
+    #config.vm.synced_folder ".",  $vm_group, id: "vagrant-root", :nfs => true
+    #config.vm.synced_folder "./", $vm_dir_project, create: false, type: "nfs"
+    # Set the default project share for linux
+    config.vm.synced_folder ".",  $vm_group, id: "vagrant-root"
+    config.vm.synced_folder "./", $vm_dir_project, create: false
  
     # Configure Virtualbox
     config.vm.provider "virtualbox" do |v|
