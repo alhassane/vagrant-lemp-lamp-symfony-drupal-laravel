@@ -14,6 +14,8 @@ echo "** we add QA bundle and dependencies in composer.json and app/AppKernel.ph
 #composer require --dev  --update-with-dependencies  fabpot/php-cs-fixer:*
 composer require --dev  --update-with-dependencies  phpunit/phpunit:*
 composer require --dev  --update-with-dependencies  phpunit/php-invoker:dev-master
+composer require --dev  --update-with-dependencies  phpunit/phpunit-skeleton-generator:*
+composer require --dev  --update-with-dependencies  phpunit/phpunit-mock-objects:2.3.*
 #composer require --dev  --update-with-dependencies  sebastian/phpcpd:*
 #composer require --dev  --update-with-dependencies  sebastian/phpdcd:*
 #composer require --dev  --update-with-dependencies  phpmd/phpmd:@stable

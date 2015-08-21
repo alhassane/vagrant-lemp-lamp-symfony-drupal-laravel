@@ -1,4 +1,5 @@
 #!/bin/bash
+
 DIR=$1
 DIRJACKRABBIT=/usr/local/jackrabbit/develop
 JACKRABBIT_JAR=jackrabbit-standalone-2.7.5.jar

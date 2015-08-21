@@ -13,16 +13,12 @@ cd $HOME_HTTP
 git clone git://github.com/preinheimer/xhprof.git xhprof
 sudo chmod o+w $HOME_HTTP/xhprof
 
-#
-sudo apt-get install php5-dev
-sudo apt-get install -f xhprof
-sudo service php5-fpm restart
-
 # we create the xhprof.ini configuration file
-if [ ! -q "/etc/php5/mods-available/xhprof.ini" ]; then
+sudo mkdir -p /tmp/xhprof
+if [ ! -f "/etc/php5/mods-available/xhprof.ini" ]; then
 sudo sh -c "cat > /etc/php5/mods-available/xhprof.ini" <<EOF
 extension=xhprof.so
-xhprof.output_dir=/tmp
+xhprof.output_dir=/tmp/xhprof
 EOF
 fi
 
@@ -182,11 +178,10 @@ $_xhprof['display'] = true;
 $_xhprof['doprofile'] = true;
 
 //Control IPs allow you to specify which IPs will be permitted to control when profiling is on or off within your application, and view the results via the UI.
-//$controlIPs = false; //Disables access controlls completely. 
-$controlIPs = array();
-$controlIPs[] = "127.0.0.1";   // localhost, you'll want to add your own ip here
-$controlIPs[] = "33.33.33.1"; 
-$controlIPs[] = "::1";         // localhost IP v6
+$controlIPs = false; //Disables access controlls completely. 
+//$controlIPs = array();
+//$controlIPs[] = "127.0.0.1";   // localhost, you'll want to add your own ip here
+//$controlIPs[] = "::1";         // localhost IP v6
 
 //$otherURLS = array();
 

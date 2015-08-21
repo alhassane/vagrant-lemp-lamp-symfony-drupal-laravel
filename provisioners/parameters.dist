@@ -5,13 +5,13 @@ $box_distrib = "ubuntu"
  
 # VM settings
 $vm_hostname = "dev.sfynx.vagrant"
-$vm_name = "SFYNX"
+$vm_name = "PIGROUPE"
 $vm_group = "/vagrant"
  
 # VM configuration and capacities
 $vm_gui = false # Enable or not GUI
 $vm_www_point = "/var/www"
-$vm_memory = "2048"
+$vm_memory = "1024"
 $vm_cpus = "2"
 $vm_cpu_cap = "100"
 $vm_ip = "192.168.33.10"
