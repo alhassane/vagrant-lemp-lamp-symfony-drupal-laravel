@@ -8,8 +8,8 @@ INSTALL_USERWWW="/var/www"
 #    INSTALL_USERWWW=$1
 #fi
 
-PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME | awk '{print tolower($0)}') # we lower the string
-PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME | awk '{print toupper($0)}') # we lower the string
+PLATEFORM_PROJET_NAME_LOWER=$(echo $PLATEFORM_PROJET_NAME |awk '{print tolower($0)}') # we lower the string
+PLATEFORM_PROJET_NAME_UPPER=$(echo $PLATEFORM_PROJET_NAME |awk '{print toupper($0)}') # we lower the string
 DATABASE_NAME="sfynx_${PLATEFORM_PROJET_NAME_LOWER}"
 DATABASE_NAME_TEST="sfynx_${PLATEFORM_PROJET_NAME_LOWER}_test"
 
@@ -69,7 +69,7 @@ export SYMFONY__TEST__DATABASE__PASSWORD__ENV__$PLATEFORM_PROJET_NAME_UPPER=pacm
 
 EOT"
 . /etc/profile.d/${PLATEFORM_PROJET_NAME_LOWER}.sh
-printenv | grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
+printenv |grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
 # unset envName # delete a env var
 
 # we create the virtualhiost of sfynx for apache
@@ -201,11 +201,11 @@ sudo ln -s /etc/apache2/sites-available/$PLATEFORM_PROJET_NAME /etc/apache2/site
 
 echo "**** we add host in the /etc/hosts file ****"
 if ! grep -q "dev.$PLATEFORM_PROJET_NAME_LOWER.local" /etc/hosts; then
-    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    test.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    prod.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "   " | sudo tee --append /etc/hosts
+    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    test.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    prod.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "   " |sudo tee --append /etc/hosts
 fi
 
 echo "**** we restart apache2 server ****"
@@ -214,7 +214,7 @@ sudo service apache2 restart
 #if [ ! -f composer.phar ]; then
 #    echo "**** we install/update the composer file ****"
 #    #wget https://getcomposer.org/composer.phar -O ./composer.phar
-#    curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+#    curl -sS https://getcomposer.org/installer |sudo php -- --install-dir=/usr/local/bin --filename=composer
 #else
 #    echo "update composer.phar"
 #    php composer.phar self-update    
@@ -231,25 +231,25 @@ rm -rf app/logs/*
 
 echo "**** we set all necessary permissions ****"
 # Utiliser l'ACL sur un système qui supporte chmod +a
-#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+#HTTPDUSER=`ps aux |grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' |grep -v root |head -1 |cut -d\  -f1`
 #sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 #sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 # Utiliser l'ACL sur un système qui ne supporte pas chmod +a
-#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-HTTPDUSER=$(ps -o user= -p $$ | awk '{print $1}')
+#HTTPDUSER=`ps aux |grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' |grep -v root |head -1 |cut -d\  -f1`
+HTTPDUSER=$(ps -o user= -p $$ |awk '{print $1}')
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
 # sans utiliser ACL
 ## Définit une permission 0775 aux fichiers
-#echo "umask(0002);" | sudo tee --prepend app/console
-#echo "umask(0002);" | sudo tee --prepend web/app_dev.php
-#echo "umask(0002);" | sudo tee --prepend web/app.php
+#echo "umask(0002);" |sudo tee --prepend app/console
+#echo "umask(0002);" |sudo tee --prepend web/app_dev.php
+#echo "umask(0002);" |sudo tee --prepend web/app.php
 ## Définit une permission 0777 aux fichiers
-#echo "umask(0000);" | sudo tee --prepend app/console
-#echo "umask(0000);" | sudo tee --prepend web/app_dev.php
-#echo "umask(0000);" | sudo tee --prepend web/app.php
+#echo "umask(0000);" |sudo tee --prepend app/console
+#echo "umask(0000);" |sudo tee --prepend web/app_dev.php
+#echo "umask(0000);" |sudo tee --prepend web/app.php
 
 sudo usermod -aG www-data $HTTPDUSER
 sudo chown -R $HTTPDUSER:www-data $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME

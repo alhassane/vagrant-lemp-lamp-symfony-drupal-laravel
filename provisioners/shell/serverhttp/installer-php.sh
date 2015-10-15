@@ -29,12 +29,12 @@ sudo apt-get -y install gearman
 sudo pecl install timezonedb
 
 echo "Install PECL HTTP (depends on php-pear, php5-dev, libcurl4-openssl-dev)"
-printf "\n" | pecl install pecl_http
+printf "\n" |pecl install pecl_http
 # Enable PECL HTTP
 #echo "extension=http.so" > /etc/php5/mods-available/http.ini
 
 # we get the php.ini file path
-PATH_PHP_INI=$(echo $(php -i | grep "Loaded Configuration File") | sed -e 's/Loaded Configuration File => //g')
+PATH_PHP_INI=$(echo $(php -i |grep "Loaded Configuration File") |sed -e 's/Loaded Configuration File => //g')
 
 # Quelques paramètres de conf qui ne me conviennent pas, pour une machine de développement / test
 if [ -f $PATH_PHP_INI ]; then
@@ -106,7 +106,7 @@ fi
 
 
 # Installation xdebug via PECL
-sh -c 'printf "\n" | sudo pecl install xdebug'
+sh -c 'printf "\n" |sudo pecl install xdebug'
 
 PATH_XDEBUG_INI="/etc/php5/mods-available/xdebug.ini"
 sh -c "cat > ${PATH_XDEBUG_INI}" <<EOT
@@ -135,13 +135,12 @@ if [ ! -f "/etc/php5/cli/conf.d/20-xdebug.ini" ]; then
 fi
 
 # Installation apc via PECL
-sh -c 'printf "\n" | sudo pecl install apc'
+sh -c 'printf "\n" |sudo pecl install apcu-beta'
 
-PATH_APC_INI="/etc/php5/mods-available/apc.ini"
-APC_SO_FILE="apc.ini"
+PATH_APC_INI="/etc/php5/mods-available/apcu.ini"
 
 sh -c "cat > ${PATH_APC_INI}" <<EOT
-;extension=\$APC_SO_FILE
+;extension=apcu.so
 ;apc.enabled = 1
 ;apc.ttl = 3600
 ;apc.file_update_protection = 2
@@ -157,5 +156,5 @@ sh -c "cat > ${PATH_APC_INI}" <<EOT
 EOT
 # we create the symbilic links
 if [ ! -f "/etc/php5/cli/conf.d/20-apc.ini" ]; then
-    sudo ln -s /etc/php5/mods-available/apc.ini /etc/php5/cli/conf.d/20-apc.ini
+    sudo ln -s /etc/php5/mods-available/apcu.ini /etc/php5/cli/conf.d/20-apcu.ini
 fi

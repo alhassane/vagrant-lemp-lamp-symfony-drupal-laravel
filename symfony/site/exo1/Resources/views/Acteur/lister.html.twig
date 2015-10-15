@@ -1,12 +1,12 @@
 {% extends 'MyAppSiteBundle::layout.html.twig' %}
 
-{% block title %}{{ 'acteur.liste' | trans }}{% endblock %}
+{% block title %}{{ 'acteur.liste' |trans }}{% endblock %}
 
 {% block content %}
 
 <form id="form_recherche" action="{{ path('myapp_acteur_rechercher') }}" method="post">
     {{ form_widget(form) }}
-    <input type="submit" value="{{ 'rechercher' | trans }}" />
+    <input type="submit" value="{{ 'rechercher' |trans }}" />
 </form>
 <div class="loading"></div>
 <div id="resultats_recherche"> 

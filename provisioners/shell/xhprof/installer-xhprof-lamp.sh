@@ -56,7 +56,7 @@ sudo ln -s /etc/apache2/sites-available/xhprof /etc/apache2/sites-enabled/xhprof
 # we add host in the /etc/hosts file
 if ! grep -q "www.xhprof.local" /etc/hosts; then
     echo "Adding QA hostname to your /etc/hosts"
-    echo "127.0.0.1    www.xhprof.local" | sudo tee --append /etc/hosts
+    echo "127.0.0.1    www.xhprof.local" |sudo tee --append /etc/hosts
 fi
 
 ##########################################
@@ -304,7 +304,7 @@ sudo chown -R www-data:www-data $HOME_HTTP/xhprof
 sudo service apache2 restart
 
 # test
-php -m | grep xhprof
+php -m |grep xhprof
 
 # add in the virtual host of the project that you want to profile
 # fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/xhprof/external/header.php \n auto_append_file=/var/www/xhprof/external/footer.php";

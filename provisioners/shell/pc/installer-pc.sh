@@ -47,7 +47,7 @@ sudo apt-get -y dist-upgrade > /dev/null
 sudo apt-get -y install openjdk-7-jdk openjdk-7-jre > /dev/null
 
 echo "*****Install tomcat 7"
-sudo sudo apt-get -y install tomcat7 tomcat7-common tomcat7-admin libtomcat7-java 
+sudo apt-get -y install tomcat7 tomcat7-common tomcat7-admin libtomcat7-java 
 
 echo "*****Install the latest git Version"
 sudo add-apt-repository ppa:git-core/ppa -y
@@ -63,6 +63,9 @@ sudo apt-get -y install libcurl4-openssl-dev
 
 echo "Install Nmap"
 sudo apt-get -y install nmap > /dev/null
+
+echo "Install htop"
+sudo apt-get -y install htop > /dev/null
 
 echo "Install Acl"
 sudo apt-get -y install acl > /dev/null

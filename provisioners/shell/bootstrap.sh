@@ -41,7 +41,7 @@ $DIR/provisioners/shell/serverhttp/installer-$SERVER.sh "$DIR"
 
 echo "**** we install/update the composer file ****"
 #wget https://getcomposer.org/composer.phar -O ./composer.phar
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+curl -sS https://getcomposer.org/installer |sudo php -- --install-dir=/usr/local/bin --filename=composer
 
 #$DIR/provisioners/shell/QA/installer-phpqatools.sh "$DIR"
 

@@ -95,13 +95,13 @@ sudo ln -s /etc/nginx/sites-available/$PLATEFORM_PROJET_NAME_HOST /etc/nginx/sit
 # we add host in the /etc/hosts file
 if ! grep -q "dev.$PLATEFORM_PROJET_NAME.local" /etc/hosts; then
     echo "Adding hostname to your /etc/hosts"
-    echo "127.0.0.1    www.$PLATEFORM_PROJET_NAME.local" | tee --append /etc/hosts
+    echo "127.0.0.1    www.$PLATEFORM_PROJET_NAME.local" |tee --append /etc/hosts
 fi
 
 # we install the composer file
 #if [ ! -f composer.phar ]; then
 #    wget https://getcomposer.org/composer.phar -O ./composer.phar
-#    # curl -s https://getcomposer.org/installer | php
+#    # curl -s https://getcomposer.org/installer |php
 #fi
 #composer require jackalope/jackalope-doctrine-dbal:1.1.* --no-update
 #composer update jackalope/jackalope-doctrine-dbal

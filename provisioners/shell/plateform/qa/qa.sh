@@ -8,7 +8,6 @@ echo "**** QA install with composer ****"
 echo "** we add QA bundle and dependencies in composer.json and app/AppKernel.php **"
 #composer require --dev  --update-with-dependencies  phpdocumentor/phpdocumentor:2.*
 #composer require --dev  --update-with-dependencies  mayflower/php-codebrowser:~1.1
-#composer require --dev  --update-with-dependencies  theseer/phpdox:*
 #composer require --dev  --update-with-dependencies  halleck45/phpmetrics:@dev
 #composer require --dev  --update-with-dependencies  squizlabs/php_codesniffer:*
 #composer require --dev  --update-with-dependencies  fabpot/php-cs-fixer:*

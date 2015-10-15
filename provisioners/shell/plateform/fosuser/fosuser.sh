@@ -7,7 +7,7 @@ FOSUSER_PREFIX=$4
 MYAPP_BUNDLE_NAME=$5
 MYAPP_PREFIX=$6
 
-DOMAINE_LOWER=$(echo $DOMAINE | awk '{print tolower($0)}') # we lower the string
+DOMAINE_LOWER=$(echo $DOMAINE |awk '{print tolower($0)}') # we lower the string
 
 echo "**** FOSUser install with composer ****"
 

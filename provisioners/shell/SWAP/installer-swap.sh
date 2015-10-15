@@ -20,4 +20,4 @@ fi
 
 # output results to terminal  
 cat /proc/swaps  
-cat /proc/meminfo | grep Swap
+cat /proc/meminfo |grep Swap

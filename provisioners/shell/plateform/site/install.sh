@@ -6,8 +6,8 @@ DOMAINE=$3
 MYAPP_BUNDLE_NAME=$4
 MYAPP_PREFIX=$5
 
-DOMAINE_LOWER=$(echo $DOMAINE | awk '{print tolower($0)}') # we lower the string
-MYAPP_BUNDLE_NAME_LOWER=$(echo $MYAPP_BUNDLE_NAME | awk '{print tolower($0)}') # we lower the string
+DOMAINE_LOWER=$(echo $DOMAINE |awk '{print tolower($0)}') # we lower the string
+MYAPP_BUNDLE_NAME_LOWER=$(echo $MYAPP_BUNDLE_NAME |awk '{print tolower($0)}') # we lower the string
 
 echo "**** ApplicationBundle creation ****"
 

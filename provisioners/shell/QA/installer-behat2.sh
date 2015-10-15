@@ -43,7 +43,7 @@ cat > ~/.composer/composer.json <<EOF
     }
 }
 EOF
-curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+curl -sS https://getcomposer.org/installer |sudo php -- --install-dir=/usr/local/bin --filename=composer
 /usr/local/bin/composer global install
 chown -R $SUDO_USER.$SUDO_USER ~/.composer
 

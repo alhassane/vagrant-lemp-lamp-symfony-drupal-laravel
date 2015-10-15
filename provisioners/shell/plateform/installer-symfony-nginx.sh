@@ -24,7 +24,7 @@ echo "**** we download artifact project ****"
 if [ ! -f $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME/composer.json ]; then
     case $PLATEFORM_INSTALL_TYPE in
         'composer' )
-            #curl -s https://getcomposer.org/installer | php
+            #curl -s https://getcomposer.org/installer |php
             wget https://getcomposer.org/composer.phar -O ./composer.phar
             composer create-project --no-interaction symfony/framework-standard-edition $INSTALL_USERWWW/$PLATEFORM_PROJET_NAME $PLATEFORM_INSTALL_VERSION
             cd $PLATEFORM_PROJET_NAME
@@ -101,7 +101,7 @@ export SYMFONY__TEST__DATABASE__PASSWORD__ENV__$PLATEFORM_PROJET_NAME_UPPER=pacm
 
 EOT"
 . /etc/profile.d/${PLATEFORM_PROJET_NAME_LOWER}.sh
-printenv | grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
+printenv |grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
 # unset envName # delete a env var
 
 echo "**** we add test config for database ****"
@@ -499,11 +499,11 @@ sudo ln -s /etc/nginx/sites-available/$PLATEFORM_PROJET_NAME /etc/nginx/sites-en
 
 echo "**** we add host in the /etc/hosts file ****"
 if ! grep -q "dev.$PLATEFORM_PROJET_NAME_LOWER.local" /etc/hosts; then
-    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    test.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    prod.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "   " | sudo tee --append /etc/hosts
+    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    test.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    prod.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "   " |sudo tee --append /etc/hosts
 fi
 
 echo "**** we restart nginx server ****"
@@ -518,7 +518,7 @@ fi
 if [ ! -f composer.phar ]; then
     echo "**** we install/update the composer file ****"
     wget https://getcomposer.org/composer.phar -O ./composer.phar
-    #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    #curl -sS https://getcomposer.org/installer |sudo php -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "update composer.phar"
     php composer.phar self-update    
@@ -549,25 +549,25 @@ rm -rf app/logs/*
 
 echo "**** we set all necessary permissions ****"
 # Utiliser l'ACL sur un système qui supporte chmod +a
-#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
+#HTTPDUSER=`ps aux |grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' |grep -v root |head -1 |cut -d\  -f1`
 #sudo chmod +a "$HTTPDUSER allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 #sudo chmod +a "`whoami` allow delete,write,append,file_inherit,directory_inherit" app/cache app/logs
 
 # Utiliser l'ACL sur un système qui ne supporte pas chmod +a
-#HTTPDUSER=`ps aux | grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' | grep -v root | head -1 | cut -d\  -f1`
-HTTPDUSER=$(ps -o user= -p $$ | awk '{print $1}')
+#HTTPDUSER=`ps aux |grep -E '[a]pache|[h]ttpd|[_]www|[w]ww-data|[n]ginx' |grep -v root |head -1 |cut -d\  -f1`
+HTTPDUSER=$(ps -o user= -p $$ |awk '{print $1}')
 sudo setfacl -R -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 sudo setfacl -dR -m u:"$HTTPDUSER":rwX -m u:`whoami`:rwX app/cache app/logs
 
 # sans utiliser ACL
 ## Définit une permission 0775 aux fichiers
-#echo "umask(0002);" | sudo tee --prepend app/console
-#echo "umask(0002);" | sudo tee --prepend web/app_dev.php
-#echo "umask(0002);" | sudo tee --prepend web/app.php
+#echo "umask(0002);" |sudo tee --prepend app/console
+#echo "umask(0002);" |sudo tee --prepend web/app_dev.php
+#echo "umask(0002);" |sudo tee --prepend web/app.php
 ## Définit une permission 0777 aux fichiers
-#echo "umask(0000);" | sudo tee --prepend app/console
-#echo "umask(0000);" | sudo tee --prepend web/app_dev.php
-#echo "umask(0000);" | sudo tee --prepend web/app.php
+#echo "umask(0000);" |sudo tee --prepend app/console
+#echo "umask(0000);" |sudo tee --prepend web/app_dev.php
+#echo "umask(0000);" |sudo tee --prepend web/app.php
 
 echo "**** add permission for $HTTPDUSER user ****"
 sudo usermod -aG www-data $HTTPDUSER

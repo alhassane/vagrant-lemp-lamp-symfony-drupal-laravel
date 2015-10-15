@@ -76,7 +76,7 @@ sudo ln -s /etc/nginx/sites-available/xhprof /etc/nginx/sites-enabled/xhprof
 # we add host in the /etc/hosts file
 if ! grep -q "www.xhprof.local" /etc/hosts; then
     echo "Adding QA hostname to your /etc/hosts"
-    echo "127.0.0.1    www.xhprof.local" | sudo tee --append /etc/hosts
+    echo "127.0.0.1    www.xhprof.local" |sudo tee --append /etc/hosts
 fi
 
 ##########################################
@@ -326,7 +326,7 @@ sudo service nginx restart
 sudo service php5-fpm restart
 
 # test
-php -m | grep xhprof
+php -m |grep xhprof
 
 # add in the virtual host of the project that you want to profile
 # fastcgi_param PHP_VALUE "auto_prepend_file=/var/www/xhprof/external/header.php \n auto_append_file=/var/www/xhprof/external/footer.php";

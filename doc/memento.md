@@ -24,6 +24,10 @@ vagrant package --base SPECIFIC_NAME_FOR_VM --output /yourfolder/OUTPUT_BOX_NAME
 vagrant box add OUTPUT_BOX_NAME /yourfolder/OUTPUT_BOX_NAME.box
 vagrant init OUTPUT_BOX_NAME
 
+vagrant package --base BNE --output /tmp/BNE_BOX.box
+vagrant box add BNE_BOX /tmp/BNE_BOX.box
+vagrant init BNE_BOX
+
 # add ubuntu box
 vagrant package –-base Ubuntu-14.04-64-Desktop  # Create Vagrant Base Box
 vagrant box add Ubuntu-14.04-64-Desktop package.box # install vagrant box

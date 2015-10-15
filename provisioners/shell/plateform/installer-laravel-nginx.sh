@@ -50,7 +50,7 @@ export LARAVEL__TEST__DATABASE__PASSWORD__ENV__$PLATEFORM_PROJET_NAME_UPPER=pacm
 
 EOT"
 . /etc/profile.d/${PLATEFORM_PROJET_NAME_LOWER}.sh
-printenv | grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
+printenv |grep "__ENV__$PLATEFORM_PROJET_NAME_UPPER" # list of all env
 # unset envName # delete a env var
 
 echo "**** we add test config for database ****"
@@ -199,9 +199,9 @@ sudo ln -s /etc/nginx/sites-available/$PLATEFORM_PROJET_NAME /etc/nginx/sites-en
 
 echo "**** we add host in the /etc/hosts file ****"
 if ! grep -q "dev.$PLATEFORM_PROJET_NAME_LOWER.local" /etc/hosts; then
-    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" | sudo tee --append /etc/hosts
-    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" | sudo tee --append /etc/hosts
-    echo "   " | sudo tee --append /etc/hosts
+    echo "# Adding hostname of the $PLATEFORM_PROJET_NAME project" |sudo tee --append /etc/hosts
+    echo "127.0.0.1    dev.$PLATEFORM_PROJET_NAME_LOWER.local" |sudo tee --append /etc/hosts
+    echo "   " |sudo tee --append /etc/hosts
 fi
 
 echo "**** we restart nginx server ****"
@@ -216,7 +216,7 @@ fi
 if [ ! -f composer.phar ]; then
     echo "**** we install/update the composer file ****"
     wget https://getcomposer.org/composer.phar -O ./composer.phar
-    #curl -sS https://getcomposer.org/installer | sudo php -- --install-dir=/usr/local/bin --filename=composer
+    #curl -sS https://getcomposer.org/installer |sudo php -- --install-dir=/usr/local/bin --filename=composer
 else
     echo "update composer.phar"
     php composer.phar self-update    

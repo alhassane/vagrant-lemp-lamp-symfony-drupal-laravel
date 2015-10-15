@@ -3,7 +3,7 @@ DIR=$1
 source $DIR/provisioners/shell/env.sh
 
 cd /tmp
-curl http://archive.apache.org/dist/lucene/solr/4.6.1/solr-4.6.1.tgz | tar xz
+curl http://archive.apache.org/dist/lucene/solr/4.6.1/solr-4.6.1.tgz |tar xz
 sudo cp /tmp/solr-4.6.1/example/lib/ext/* /usr/share/tomcat7/lib/
 sudo cp /tmp/solr-4.6.1/dist/solr-4.6.1.war /var/lib/tomcat7/webapps/solr.war
 sudo cp -R /tmp/solr-4.6.1/example/solr /var/lib/tomcat7
